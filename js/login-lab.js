@@ -527,7 +527,7 @@
         ln("dim", ""),
         ln("dim", "@BeforeAll"),
         ln("dim", "static void setup() {"),
-        ln("dim", "  Configuration.baseUrl = ConfigReader.resolveWebBaseUrl();"),
+        ln("dim", "  Configuration.baseUrl = config.baseUrl();"),
         ln("dim", "  Configuration.browser = config.browser();"),
         ln("dim", "  Configuration.browserSize = config.browserSize();"),
         ln("dim", "  Configuration.headless = config.headless();"),

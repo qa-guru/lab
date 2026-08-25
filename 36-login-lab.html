@@ -527,8 +527,7 @@ class LoginTests extends TestBase {
 
   @BeforeAll
   static void setup() {
-    Configuration.baseUrl =
-        ConfigReader.resolveWebBaseUrl();
+    Configuration.baseUrl = config.baseUrl();
     Configuration.browser = config.browser();
     Configuration.browserSize = config.browserSize();
     Configuration.headless = config.headless();
@@ -543,7 +542,7 @@ class LoginTests extends TestBase {
 
 @BeforeAll
 static void setup() {
-  Configuration.baseUrl = ConfigReader.resolveWebBaseUrl();
+  Configuration.baseUrl = config.baseUrl();
   Configuration.browser = config.browser();
   Configuration.browserSize = config.browserSize();
   Configuration.headless = config.headless();

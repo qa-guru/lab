@@ -79,7 +79,7 @@ HomePage shouldHaveWelcomeMessage(String message)
         <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">условно · TestBase.java</p></div>
         <div class="panel__body">
           <pre class="pre--sm">protected LoginPage loginPage = new LoginPage();
-Configuration.baseUrl = ConfigReader.resolveWebBaseUrl();
+Configuration.baseUrl = config.baseUrl();
 // chrome / remote — из config
 // не new ChromeDriver() в тесте
 
