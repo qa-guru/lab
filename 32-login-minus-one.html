@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Login · убрать один слой</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="32-login-minus-one">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">32 · полный − 1</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Убрали один слой — сломалось своё</h1>
+  <p class="lead">Вкладки те же. Стек почти полный. <strong>Каждый слой закрывает свою галлюцинацию</strong> — остальные три её не дублируют.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">− Skill · нет When / DoD</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">Метод может получиться (ctx + RAG).
+Ломается маршрут:
+  новый LoginSadPathTests.java     // не расширил LoginTests
+  ./gradlew test -DincludeTags=e2e // весь срез, не -Dtest=
+  нет ответа «слой / стенды / exit»</pre>
+        </div>
+      </section>
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">− Rule · нет ПДД на каждый чат</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">Тело уже канон. В том же чате:
+  ./gradlew test     // full suite
+  ./gradlew testE2e  // такого task нет
+  git commit         // без OK
+  localhost · «ещё api заодно»</pre>
+        </div>
+      </section>
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">− RAG · факты с вкладки happy path</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">// скопировал вкладку 1 на sad path
+loginPage.openPage()
+        .fillAndSubmitForm("user1", "wrongpassword")
+        .shouldHaveWelcomeMessage("…"); // ждёт HomePage
+
+$("#password").setValue("123");    // или выдумал селектор
+$(".alert").shouldHave(text("Invalid credentials"));
+@Step("Type password: {password}")
+@Step() на классе LoginPage</pre>
+        </div>
+      </section>
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">− ADR · спор снова открыт</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">UI-ошибка ок. Плюс:
+  $("pre") «401»          // нет такого UI
+  class Login401Tests     // второй e2e
+  «на всякий e2e на JSON»</pre>
+        </div>
+      </section>
+    </div>
+    <div class="do"><b>Читать таблицу</b>−RAG на этом промпте самый зрелищный: агент честно смотрит на открытый happy path и применяет его к неверному паролю. Context не лечит, он <em>кормит</em> эту ошибку.</div>
+  </div>
+
+  <footer class="ft">
+    <span>Live: New Agent после каждого выключения слоя</span>
+    <span>A/B одного слоя без стека — листы 21–24</span>
+    <span>живой опыт · 3/6</span>
+  </footer>
+</article>
+</body>
+</html>

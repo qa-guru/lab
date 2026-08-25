@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Skill · маршрутный лист</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="01-skills">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · takeaway Java / Gradle / Selenide</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">01 · skill</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Skill — маршрутный лист на одну задачу</h1>
+  <p class="lead">Не энциклопедия и не ПДД. Skill отвечает: <strong>когда вызывать, какие шаги, когда считать готовым</strong>. Имя: <code>qa-&lt;глагол&gt;-&lt;объект&gt;</code>. Раннер CI и Sonar — не имя skill, а RAG.</p>
+
+  <div class="body">
+    <div class="grid-12" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">docs/agent-skills/qa-write-test/SKILL.md</p></div>
+        <div class="panel__body">
+          <div class="cols-2">
+            <div>
+              <h2 class="sec">Каркас</h2>
+              <ul>
+                <li><strong>When</strong> — триггеры («напиши e2e», «покрой API»)</li>
+                <li><strong>Do not</strong> — CSS в тесте, ChromeDriver (commit / URL — rule)</li>
+                <li><strong>Steps</strong> — слой → стенды → PO → прогон</li>
+                <li><strong>DoD</strong> — чеклист, не «ну вроде ок»</li>
+                <li><strong>RAG (2–4 id)</strong> — факты рядом, не внутри</li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="sec">Промпт</h2>
+              <p class="prompt">Rules ON. Прочитай docs/agent-skills/qa-write-test/SKILL.md
+и чанки po-locators, po-step, test-negative, cfg-stands.
+Добавь автотест на неуспешный логин с неправильным паролем.
+Укажи pipeline/stage/prod.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="card card--skill">
+        <h2 class="sec">Это skill</h2>
+        <ul>
+          <li>Один глагол, один объект</li>
+          <li>Живые команды takeaway</li>
+          <li>Один Cline task = один skill</li>
+        </ul>
+        <h2 class="sec" style="margin-top:8px">Не skill</h2>
+        <ul>
+          <li>GitHub vs Jenkins — чанки <code>ci-*</code></li>
+          <li>TMS / AllureId — <code>tms-meta</code></li>
+          <li>JaCoCo / Sonar — <code>quality-gates</code></li>
+          <li>Хост (DNS) ≠ стенд (<code>qa-run-stand</code>)</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">пак курса · тот же список на занятиях 2, 3 и 4</p></div>
+      <div class="panel__body">
+        <div class="cols-2">
+          <div>
+            <h2 class="sec">Занятие 2</h2>
+            <p class="pack">
+              <code>qa-smoke-debug</code> <code>qa-write-test</code> <code>qa-review-framework</code>
+              <code>qa-run-stand</code> <code>qa-homework-check</code>
+              <code>qa-coverage-audit</code> <code>qa-pyramid-plan</code> <code>qa-bootstrap-framework</code>
+            </p>
+            <h2 class="sec" style="margin-top:8px">Занятие 3</h2>
+            <p class="pack">
+              <code>qa-review-ci</code> <code>qa-create-ci</code> <code>qa-fix-ci</code>
+              <code>qa-run-ci</code> <code>qa-stop-ci</code> <code>qa-pull-takeaway</code>
+              <code>qa-setup-host</code> <span class="muted">опц.</span>
+            </p>
+          </div>
+          <div>
+            <h2 class="sec">Занятие 4 · пирамида</h2>
+            <p class="pack"><code>qa-coverage-audit</code> → <code>qa-pyramid-plan</code> → <code>qa-write-test</code></p>
+            <p class="tiny muted" style="margin-top:6px"><code>qa-make-full-pyramid</code> — ярус за ярусом уже влитой фичи, потом STOP. Не план и не «один автотест».</p>
+            <p class="tiny muted"><code>qa-run-ci</code> ≠ <code>qa-run-stand</code>: workflow/build vs Gradle на app.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="do"><b>Do</b>When · якорь в проекте · RAG id · DoD. После смены skill — новый task.</div>
+      <div class="dont"><b>Don't</b>Таблица HTTP-глаголов внутри generic skill (это RAG <code>crud-http</code>). Не «почини всё» одним skill.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Загрузка: «прочитай SKILL.md» — не авто</span>
+    <span>Живые: <code>docs/agent-skills/&lt;name&gt;/SKILL.md</code></span>
+    <span>занятие 2</span>
+  </footer>
+</article>
+</body>
+</html>

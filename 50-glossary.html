@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Словарь · AI-стек на LoginTests</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body class="gloss">
+<div class="gloss-screen" id="50-glossary">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · словарь на каноне wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="hd__id">50 · словарь</div>
+      <a class="lab-back" href="index.html">← листы</a>
+    </div>
+  </header>
+
+  <h1 class="h1">Один сценарий — два пояснения у термина</h1>
+  <p class="gloss-lead">Промышленный AI-стек звучит чужим, пока его не посадить на уже знакомый канон. Слева — <strong>что это вообще</strong>. Справа — <strong>тот же смысл на <code>LoginTests</code></strong>: промпт «добавь автотест на неуспешный логин с неправильным паролем» и метод <code>shouldShowErrorWhenPasswordIsWrong</code>.</p>
+
+  <section class="gloss-canon panel">
+    <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">якорь · LoginTests + API-близнец</p></div>
+    <div class="panel__body">
+      <pre>// e2e · текст на форме
+loginPage.openPage()
+        .typeUsername("user1")
+        .typePassword("wrongpassword")
+        .submitExpectingError()
+        .shouldHaveErrorMessage("Wrong login or password");
+
+// не fillAndSubmitForm — тот ждёт HomePage
+// не @Tag("smoke") — это не prod slice
+// JSON 401 уже в AuthApiTests#loginWithInvalidPassword</pre>
+    </div>
+  </section>
+
+  <div class="gloss-search">
+    <input type="search" id="gloss-q" placeholder="Найти термин: LangGraph, latency, токен…" aria-label="Поиск по словарю">
+    <p class="gloss-search__hint" id="gloss-count"></p>
+  </div>
+  <p class="gloss-empty" id="gloss-empty">Ничего не нашлось. Попробуйте «граф», «Allure» или «токен».</p>
+
+  <nav class="gloss-toc" aria-label="Разделы">
+    <a href="#sec-model">Модель</a>
+    <a href="#sec-agent">Агент</a>
+    <a href="#sec-layers">Слои курса</a>
+    <a href="#sec-memory">Память и факты</a>
+    <a href="#sec-time">Время и стоимость</a>
+    <a href="#sec-durable">Долгие процессы</a>
+    <a href="#sec-observe">Наблюдаемость</a>
+  </nav>
+
+  <h2 class="gloss-sec" id="sec-model">Модель</h2>
+  <div class="gloss-terms">
+
+    <article class="term" id="llm">
+      <header class="term__bar">
+        <h3 class="term__name">LLM</h3>
+        <p class="term__aka">модель · large language model</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Программа, которая предсказывает следующий кусок текста. Не «знает репозиторий» и не запускает Gradle сама — только генерирует токены, пока ей не дадут инструменты и файлы.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Модель может <em>написать</em> метод с <code>fillAndSubmitForm</code>, потому что так выглядит соседний happy path. Правильный sad path она не «помнит из интернета» — его держат skill, RAG и открытый канон.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="prompt">
+      <header class="term__bar">
+        <h3 class="term__name">Prompt</h3>
+        <p class="term__aka">промпт · запрос в чат</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Текст, с которого начинается работа модели. Живёт в чате и умирает вместе с ним. Стабильные правила лучше класть в git (rule / skill), а не повторять в каждом промпте.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>«Добавь автотест на неуспешный логин с неправильным паролем». Фразу «не коммить» в чат не пишут — это rule. Без слоёв этого промпта хватает, чтобы скопировать happy path.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="token">
+      <header class="term__bar">
+        <h3 class="term__name">Token</h3>
+        <p class="term__aka">токен · единица биллинга</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Кусок текста, которым модель читает и пишет. Платят и ограничивают окно не «страницами», а токенами. Чем больше файлов запихнули в контекст, тем дороже и ближе потолок окна.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Весь класс + <code>qa-write-test</code> + четыре чанка RAG — уже заметный чек. Поэтому skill говорит «прочитай 2–4 файла», а не всю папку <code>docs/agent-skills/rag/</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="context-window">
+      <header class="term__bar">
+        <h3 class="term__name">Context window</h3>
+        <p class="term__aka">окно контекста · сколько модель видит</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Жёсткий лимит токенов на один запрос: промпт + открытые файлы + история чата + ответ. Что не влезло — для модели не существует. Что влезло лишнего — часто побеждает нужный факт.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Лист 35: открытый <code>shouldLoginWithValidCredentials</code> занимает окно и кормит копипаст <code>fillAndSubmitForm</code> на sad path. Это не «глупость модели», а переполнение сцены.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="temperature">
+      <header class="term__bar">
+        <h3 class="term__name">Temperature</h3>
+        <p class="term__aka">температура · случайность</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Ручка «насколько модель вольна выбирать редкие слова». Высокая — разнообразный текст. Низкая — более стабильный, повторяемый ответ. Для канона обычно держат низкой.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Нужен один и тот же PO-путь: <code>typeUsername</code> → <code>submitExpectingError</code>. «Креативный» <code>@DisplayName</code> безвреден; креативный локатор <code>$("input")</code> — уже баг.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="hallucination">
+      <header class="term__bar">
+        <h3 class="term__name">Hallucination</h3>
+        <p class="term__aka">галлюцинация · выдуманный факт</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Модель выдаёт уверенный текст, которого нет в источниках: несуществующий API, команда, файл. Это не ложь «с намерением» — статистика следующего токена без якоря.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Листы 32–34: Gradle-task <code>testE2e</code> (его нет) — без rule; CSS в <code>*Tests</code> / копия happy path — без RAG; второй e2e «на JSON 401» — без ADR 009; commit без OK — без rule.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="gloss-sec" id="sec-agent">Агент</h2>
+  <div class="gloss-terms">
+
+    <article class="term" id="agent">
+      <header class="term__bar">
+        <h3 class="term__name">Agent</h3>
+        <p class="term__aka">агент · не чатбот</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Цикл: подумать → вызвать инструмент → посмотреть результат → снова подумать. Чатбот только пишет текст. Агент читает файлы, запускает команды, правит код.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Cursor: Read <code>LoginTests.java</code> → прочитать skill → Write метод → Shell Gradle → если красный, править PO. Если остановился после «вот код, сами гоняйте» — это ещё не агент по DoD курса.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="agent-loop">
+      <header class="term__bar">
+        <h3 class="term__name">Agent loop</h3>
+        <p class="term__aka">think → act → observe</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Повтор шагов, пока не выполнен DoD или не сработал стоп (лимит итераций, человек, ошибка). Без петли получается одноразовая цепочка.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Skill <code>qa-write-test</code>: слой → RAG → PO → метод → <code>-Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong</code> → exit code. Упал селектор — ещё круг, не «ну ок».</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="tools">
+      <header class="term__bar">
+        <h3 class="term__name">Tools / function calling</h3>
+        <p class="term__aka">инструменты · вызов функций</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Модель не ходит в файлы сама: IDE даёт ей список функций (прочитать, найти, выполнить команду). Модель выбирает имя и аргументы; среда исполняет и возвращает результат.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Read / Grep / Write / Shell. Shell — это <code>./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong</code>, не «весь suite».</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="mcp">
+      <header class="term__bar">
+        <h3 class="term__name">MCP</h3>
+        <p class="term__aka">Model Context Protocol · розетка для tools</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Стандарт, как подключить внешний инструмент к агенту: не писать драйвер с нуля, а воткнуть сервер (браузер, тикеты, дизайн). Это не модель и не оркестратор.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>В takeaway канон закрывается файлами репо и Gradle. MCP пригодился бы, если агент ходил в Allure-сервер, TMS или стенд по API без вашего Shell. Для wrong password не обязателен.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="chain">
+      <header class="term__bar">
+        <h3 class="term__name">Chain</h3>
+        <p class="term__aka">цепочка · линейный пайплайн</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Фиксированный порядок шагов без развилки и без возврата: A → B → C → стоп. Просто и хрупко: ошибка в B не умеет «вернуться и перечитать факт».</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>«Прочитай вкладку → напиши тест как соседний метод → готово». Так рождается sad path через <code>fillAndSubmitForm</code>. Цепочка закончилась до проверки ошибки на форме.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="langchain">
+      <header class="term__bar">
+        <h3 class="term__name">LangChain</h3>
+        <p class="term__aka">библиотека кирпичей · LLM + tools + RAG</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Набор готовых кусков: вызвать модель, собрать промпт, подключить инструмент, достать чанк из RAG. Сам по себе не решает, когда зациклиться и когда остановиться — это уже граф.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Аналог: «умею прочитать <code>LoginPage</code>, умею вызвать Gradle, умею вставить шаблон теста». Без маршрутного листа skill это те же кирпичи, из которых легко сложить неверный happy-path-клон.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="langgraph">
+      <header class="term__bar">
+        <h3 class="term__name">LangGraph</h3>
+        <p class="term__aka">граф состояний · циклы · ветки</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Оркестрация агента как граф: узлы (шаги), рёбра (что дальше), состояние (что уже сделали), петли (retry), ожидание человека. Берут, когда логика не линейная цепочка.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p><code>qa-write-test</code> уже граф: выбрать <code>@Layer</code> → RAG → расширить PO → метод → Gradle → красный? triage. Ветка ADR: UI-текст → e2e; JSON 401 → <code>AuthApiTests</code>, не второй e2e.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="orchestration">
+      <header class="term__bar">
+        <h3 class="term__name">Orchestration</h3>
+        <p class="term__aka">оркестрация · кто решает следующий шаг</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Слой, который говорит «теперь это». Либо жёсткий workflow (всегда одни и те же шаги), либо агент (модель выбирает инструмент). На практике часто смесь.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Skill задаёт маршрут, rule режет запретное, модель выбирает, читать ли ещё <code>po-fluent</code>. Gradle в CI — тоже оркестрация, только без LLM: всегда <code>-Denv</code> и tags.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="state">
+      <header class="term__bar">
+        <h3 class="term__name">State</h3>
+        <p class="term__aka">состояние · память шага</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Данные, которые граф таскает между узлами: какие файлы тронули, что уже прогнали, ждали ли человека. Потеряли state — начали с нуля или сделали дубль.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>«Метод уже добавлен, Gradle ещё красный, <code>submitExpectingError</code> есть в PO». Новый чат без этого state снова пишет второй <code>shouldShowErrorWhenPasswordIsWrong</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="guardrail">
+      <header class="term__bar">
+        <h3 class="term__name">Guardrail</h3>
+        <p class="term__aka">ограждение · «нельзя всегда»</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Жёсткий запрет вокруг модели: не этот URL, не эти секреты, не этот action. Срабатывает независимо от того, «убедительно» ли модель просит исключение.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Rules: не commit без OK, всегда <code>-Denv</code>, не full suite, не <code>localhost</code> в Java, один task — один ярус. Skill говорит <em>как</em>; guardrail говорит <em>нельзя</em>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="hitl">
+      <header class="term__bar">
+        <h3 class="term__name">Human-in-the-loop</h3>
+        <p class="term__aka">HITL · стоп и ждать человека</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Граф умеет остановиться и не идти дальше без подтверждения: деплой, платёж, публикация. Иначе агент делает необратимое сам.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>«Нет commit без OK». Агент дописывает метод и показывает diff. Кнопка commit — ваша. Temporal как раз умеет узел «wait for approval» часами; чат Cursor — нет.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="gloss-sec" id="sec-layers">Слои курса</h2>
+  <div class="gloss-terms">
+
+    <article class="term" id="skill">
+      <header class="term__bar">
+        <h3 class="term__name">Skill</h3>
+        <p class="term__aka">как сделать задачу · маршрутный лист</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Workflow под один глагол: когда звать, шаги, DoD. Читают по промпту, не на каждый чат. В AI-стеке это готовый граф «как работать», часто поверх LangGraph.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p><code>docs/agent-skills/qa-write-test/SKILL.md</code>: один <code>@Layer</code> → PO → <code>-Dtest=</code> → стенды в ответе. Без skill типично встаёт свой <code>ChromeDriver</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="rule">
+      <header class="term__bar">
+        <h3 class="term__name">Rule</h3>
+        <p class="term__aka">что нельзя всегда · ПДД</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Лимиты на каждый чат. В стеке — guardrail. Короткий файл; не маршрут задачи и не факт про локатор.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p><code>.cursor/rules/</code>: tags e2e, не suite, не commit, всегда <code>-Denv</code>. Без rule агент после wrong password гоняет всё и предлагает commit.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="rag-layer">
+      <header class="term__bar">
+        <h3 class="term__name">RAG (слой курса)</h3>
+        <p class="term__aka">карточка факта · 2–4 файла</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>См. ниже <a href="#rag">RAG как технология</a>. В курсе это ещё и дисциплина: один id = один файл в <code>docs/agent-skills/rag/</code>, не скармливать всю папку.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p><code>test-negative</code> · <code>po-step</code> · <code>po-locators</code> · <code>cfg-stands</code>. Без них — <code>$("input")</code>, копия <code>fillAndSubmitForm</code>, «Invalid credentials».</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="adr">
+      <header class="term__bar">
+        <h3 class="term__name">ADR</h3>
+        <p class="term__aka">почему A, не B · решение</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Зафиксированный выбор, который дорого откатывать. Не skill (как) и не RAG (факт). В стеке ближе к policy: развилка графа уже решена заранее.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Контракт 401 → api-ярус, не второй e2e (ADR 009). Screenshot — slice, не <code>@Layer</code> (005, другой промпт). Без 009 агент закрывает JSON кликом по форме.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="context-tabs">
+      <header class="term__bar">
+        <h3 class="term__name">Context (вкладки)</h3>
+        <p class="term__aka">сцена · не пятый слой</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>То, что модель видит прямо сейчас: открытые файлы, кусок чата. Это не skill и не rule. Может помочь — и может перекричать канон.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Две вкладки на занятии: happy path в <code>LoginTests</code> и <code>LoginPage</code>. Лаборатория 36: context включён — копипаст; выключен — другой набор галлюцинаций.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="gloss-sec" id="sec-memory">Память и факты</h2>
+  <div class="gloss-terms">
+
+    <article class="term" id="rag">
+      <header class="term__bar">
+        <h3 class="term__name">RAG</h3>
+        <p class="term__aka">retrieval-augmented generation · достать, потом генерировать</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Сначала ищут куски знаний (retrieval), потом подставляют их в промпт и просят модель ответить. Модель не «вспоминает репозиторий» — ей показывают карточки.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Skill прямо пишет: прочитай <code>test-negative</code> и <code>po-step</code> до кода. Тогда error-path берётся из чанка, а не из соседнего <code>shouldLoginWithValidCredentials</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="chunk">
+      <header class="term__bar">
+        <h3 class="term__name">Chunk</h3>
+        <p class="term__aka">чанк · единица retrieval</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Небольшой документ, который индексируют и подтягивают целиком. Слишком большой — жрёт окно. Слишком мелкий — нет смысла.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Файл <code>docs/agent-skills/rag/test-negative.md</code> — один чанк с каноном empty login / wrong password. Не «весь PACK.md на 80 строк про все skills».</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="embedding">
+      <header class="term__bar">
+        <h3 class="term__name">Embedding</h3>
+        <p class="term__aka">эмбеддинг · вектор смысла</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Числовой отпечаток текста. Поиск идёт не по точному слову, а по «похожему смыслу». Удобно — и можно достать соседнюю, но не ту карточку.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Запрос «negative login» должен попасть в <code>test-negative</code>. Если индекс кривой, подтянется <code>po-fluent</code> с примером <code>fillAndSubmitForm</code> — retrieval miss, дальше галлюцинация уже «логичная».</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="retrieval-miss">
+      <header class="term__bar">
+        <h3 class="term__name">Retrieval miss</h3>
+        <p class="term__aka">не тот чанк · плохой поиск</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>RAG сработал, но принёс не тот документ. Модель честно опирается на мусор. Лечится диетой чанков и явными путями в skill, не «более умной» моделью.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Как неверный локатор: искали error-path, нашли happy-path fluent. На занятии 3 путь к файлу пишут явно, как раз чтобы не ловить miss.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="gloss-sec" id="sec-time">Время и стоимость</h2>
+  <div class="gloss-terms">
+
+    <article class="term" id="latency">
+      <header class="term__bar">
+        <h3 class="term__name">Latency</h3>
+        <p class="term__aka">задержка · сколько ждали</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Время от запроса до ответа. Для LLM смотрят отдельно первый токен и полный ответ. Агент с кучей шагов почти всегда медленнее одной генерации.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Две разные задержки. Продукт: Submit → текст «Wrong login or password». Агент: промпт → зелёный Gradle. Rule запрещает suite, потому что latency агента взлетает на минуты.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="ttft">
+      <header class="term__bar">
+        <h3 class="term__name">TTFT</h3>
+        <p class="term__aka">time to first token · первый кусок ответа</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Когда пользователь впервые видит текст (или первый токен стрима). Полный ответ может прийти сильно позже. Для чата TTFT важнее «средней» latency.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Первый абзац в чате «пишу e2e на wrong password» — TTFT. Зелёный <code>-Dtest=…PasswordIsWrong</code> — total latency агента. На форме аналог TTFT — момент, когда появился текст ошибки, не когда анимация закончилась.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="percentiles">
+      <header class="term__bar">
+        <h3 class="term__name">p50 / p95 / p99</h3>
+        <p class="term__aka">процентили · хвост, не среднее</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>p50 — типичный случай. p95/p99 — редкие, но живые: почти все быстро, каждый сотый очень медленно. По среднему хвост не видно.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Обычный прогон wrong password — секунды. p99 — холодный браузер, compose не успел, flaky wait. Для агента p99 — «прочитал весь репозиторий вместо 4 чанков».</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="timeout">
+      <header class="term__bar">
+        <h3 class="term__name">Timeout</h3>
+        <p class="term__aka">таймаут · перестать ждать</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Лимит ожидания шага. Без него агент или тест висит, пока не упрётся в лимит среды. Таймаут — тоже вид guardrail.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Selenide ждёт элемент ошибки конечное время. Gradle в CI не крутится вечно. Агент не должен «ещё чуть-чуть» гонять весь модуль без <code>-Dtest=</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="sla">
+      <header class="term__bar">
+        <h3 class="term__name">SLA</h3>
+        <p class="term__aka">service level · договор по времени/качеству</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Цифра, с которой сравнивают latency и ошибки: «p95 ответа &lt; 2 с». Без SLA latency — просто число в дашборде.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Неформально: форма логина не должна крутиться десятки секунд; агент на один метод — минуты, не полчаса suite. Homework-check — SLA по качеству сдачи, не по миллисекундам.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="cost">
+      <header class="term__bar">
+        <h3 class="term__name">Cost</h3>
+        <p class="term__aka">стоимость · токены + минуты CI</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Деньги на токены плюс время людей и пайплайна. Агент с десятью e2e на каждую правку дороже «глупой» модели с узким skill.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Канон гоняет один метод, не <code>LoginTests</code> целиком и не <code>./gradlew test</code>. Лишний браузерный прогон — и счёт модели, и очередь CI.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="gloss-sec" id="sec-durable">Долгие процессы</h2>
+  <div class="gloss-terms">
+
+    <article class="term" id="temporal">
+      <header class="term__bar">
+        <h3 class="term__name">Temporal</h3>
+        <p class="term__aka">durable workflow · не LLM</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Движок долгих процессов: шаги пишутся в историю, рестарт сервера не обнуляет работу, есть таймеры, retry и ожидание человека. Это Jenkins-идея для кода, не библиотека промптов.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Сценарий «напиши тест → дождись compose <code>:8800</code> → прогони → подожди OK на commit» не обязан умереть вместе с чатом. Для одного метода на занятии Temporal избыточен; для ночного агента — нет.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="durable-workflow">
+      <header class="term__bar">
+        <h3 class="term__name">Durable workflow</h3>
+        <p class="term__aka">процесс, который переживает рестарт</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Состояние шагов лежит не в RAM чата, а в журнале. Упал воркер — продолжили с того же узла. Temporal, Cadence, часто CI job — из этого семейства.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>GitHub Actions гоняет Gradle, даже если ноут закрыт. Allure results остаются в <code>build/allure-results</code>. Чат Cursor после Reload — уже не тот workflow.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="checkpoint">
+      <header class="term__bar">
+        <h3 class="term__name">Checkpoint</h3>
+        <p class="term__aka">снимок состояния графа</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Сохранили state после узла, чтобы resume не начинал с промпта. LangGraph умеет чекпоинты; Temporal пишет события истории.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>«PO уже расширен, метод в файле, Gradle не запускали». Новый Agent после смены слоёв (лаборатория 36) как раз <em>без</em> чекпоинта — иначе старый state смешает слои.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="idempotency">
+      <header class="term__bar">
+        <h3 class="term__name">Idempotency</h3>
+        <p class="term__aka">идемпотентность · повтор без дубля</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Повторный запуск не создаёт второй эффект: второй платёж, второй пользователь, второй такой же тест. Нужна, когда retry и рестарты — норма.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Второй прогон промпта не должен добавить <code>shouldShowErrorWhenPasswordIsWrong2</code>. Канон уже в репо — агент говорит «есть», а не плодит метод. POST login сам по себе не идемпотентен: каждый вызов — новая попытка входа.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="stateless">
+      <header class="term__bar">
+        <h3 class="term__name">Stateless / stateful</h3>
+        <p class="term__aka">без сессии на сервере / с памятью</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Stateless: сервер не помнит вас между запросами (токен в каждом). Stateful: помнит (сессия, граф агента). Путают с «есть ли логин».</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>API логина takeaway — stateless: токен живёт у клиента. Агент, который пишет тест, stateful: помнит, что метод уже добавлен. Потеряли память чата — поведение как у нового агента.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="gloss-sec" id="sec-observe">Наблюдаемость</h2>
+  <div class="gloss-terms">
+
+    <article class="term" id="observability">
+      <header class="term__bar">
+        <h3 class="term__name">Observability</h3>
+        <p class="term__aka">логи · метрики · трейсы</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Способ понять, <em>почему</em> система себя так ведёт: что вызвали, сколько заняло, где упало, сколько стоило. Без этого агент — чёрный ящик.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Для продукта: Gradle + Allure (steps PO, 401, скрин). Для агента: какой чанк RAG пришёл, какой tool, сколько токенов. Листы 30–36 — ручная observability слоёв.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="tracing">
+      <header class="term__bar">
+        <h3 class="term__name">Tracing / span</h3>
+        <p class="term__aka">трейс · шаг с временем</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Трейс — одна операция целиком. Span — кусок внутри: вызов модели, tool, retrieval. По ним считают latency узла, не «всё вместе».</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Allure <code>@Step</code> на <code>typePassword</code> / <code>submitExpectingError</code> — spans e2e. У агента span «прогон Gradle» обычно длиннее span «написать метод».</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="langfuse">
+      <header class="term__bar">
+        <h3 class="term__name">Langfuse</h3>
+        <p class="term__aka">Allure для LLM · трейсы, токены, cost</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Observability специально для промптов и агентов: какой промпт ушёл, какой чанк RAG, какие tools, latency, стоимость, оценки. Соседи: LangSmith, Phoenix, Helicone.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Показал бы: подтянулся <code>test-negative</code> или случайно <code>po-fluent</code> с <code>fillAndSubmitForm</code>; вызвали Write и Shell; 12 с; где поставили <code>@Tag("smoke")</code> на negative. Лаборатория 36 делает это глазами преподавателя.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="eval">
+      <header class="term__bar">
+        <h3 class="term__name">Eval</h3>
+        <p class="term__aka">evaluation · проверка качества ответа</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Набор кейсов и рубрика: ответ агента pass/fail. Не то же самое, что e2e продукта. Без eval вы «нравится в чате», а не измеряете регресс промпта.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p><code>qa-homework-check</code> + рубрика: слой выбран, нет URL в тесте, есть <code>-Denv</code>, нет commit. Канон wrong password — золотой эталон eval: fluent error-path, не клон happy path.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <p class="tiny muted">Канон сценария: <a href="index.html#20-login">лист 20</a> · live-абляция: <a href="36-login-lab.html">лаборатория 36</a></p>
+
+</div>
+<script>
+(function () {
+  var input = document.getElementById("gloss-q");
+  var count = document.getElementById("gloss-count");
+  var terms = Array.prototype.slice.call(document.querySelectorAll(".term"));
+  var sections = Array.prototype.slice.call(document.querySelectorAll(".gloss-sec"));
+  function text(el) { return (el.textContent || "").toLowerCase(); }
+  function run() {
+    var q = (input.value || "").trim().toLowerCase();
+    var shown = 0;
+    terms.forEach(function (term) {
+      var on = !q || text(term).indexOf(q) !== -1;
+      term.hidden = !on;
+      if (on) shown += 1;
+    });
+    sections.forEach(function (sec) {
+      var wrap = sec.nextElementSibling;
+      var any = wrap && Array.prototype.some.call(wrap.querySelectorAll(".term"), function (t) { return !t.hidden; });
+      sec.hidden = !any;
+      if (wrap) wrap.hidden = !any;
+    });
+    document.body.classList.toggle("is-empty", shown === 0);
+    count.textContent = q ? ("показано " + shown + " из " + terms.length) : (terms.length + " терминов");
+  }
+  input.addEventListener("input", run);
+  run();
+})();
+</script>
+</body>
+</html>

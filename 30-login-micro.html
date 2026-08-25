@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Login · микропроект</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="30-login-micro">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">30 · микропроект</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Две вкладки и один промпт</h1>
+  <p class="lead">Сцена занятия: открыты <strong>LoginTests</strong> (успешный логин) и <strong>LoginPage</strong>. <strong>HomePage</strong> (Welcome), TestBase и Gradle — не третья вкладка, агент их «видит» сам. Это <strong>project context</strong>, не слой. Слои включаем со следующего листа.</p>
+
+  <div class="body">
+    <p class="prompt">Добавь автотест на неуспешный логин с неправильным паролем</p>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">вкладка 1 · LoginTests.java</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">@Layer("e2e") @Epic("Authentication") @Feature("Login")
+class LoginTests extends TestBase {
+
+  @Test @Tag("e2e") @Tag("smoke") @Tag("positive")
+  @DisplayName("User is logged in with valid credentials")
+  void shouldLoginWithValidCredentials() {
+    loginPage.openPage()
+            .fillAndSubmitForm("user1", "password1")
+            .shouldHaveWelcomeMessage("Welcome, user1!");
+  }
+}</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">вкладка 2 · LoginPage.java</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">loginInput    = $("[data-testid='login-input']");
+passwordInput = $("[data-testid='password-input']");
+submitButton  = $("[data-testid='submit-button']");
+
+LoginPage openPage()
+HomePage  fillAndSubmitForm(String username, String password)  // только happy path
+LoginPage typeUsername(String username)
+LoginPage typePassword(String password)</pre>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">условно · HomePage.java</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">welcomeMessage = $("[data-testid='welcome-message']");
+
+HomePage shouldHaveWelcomeMessage(String message)
+  // fillAndSubmitForm возвращает сюда</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">условно · TestBase.java</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">protected LoginPage loginPage = new LoginPage();
+Configuration.baseUrl = ConfigReader.resolveWebBaseUrl();
+// chrome / remote — из config
+// не new ChromeDriver() в тесте
+
+test { includeTags из -DincludeTags; -Denv= }
+// task testE2e — нет
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -Dtest=LoginTests#&lt;method&gt;</pre>
+        </div>
+      </section>
+    </div>
+
+    <div class="dont"><b>Перед live</b>Закомментируй <code>shouldShowErrorWhenPasswordIsWrong</code> — в takeaway метод уже лежит. Иначе skill честно скажет «не дублируй». Промпт на 31–35 <strong>тот же</strong> (жёлтая плашка только здесь). «Не коммить» в чат не писать — это Rule.</div>
+  </div>
+
+  <footer class="ft">
+    <span>Context всегда включён · не слой</span>
+    <span>Канон happy path: <code>LoginTests#shouldLoginWithValidCredentials</code></span>
+    <span>живой опыт · 1/6</span>
+  </footer>
+</article>
+</body>
+</html>

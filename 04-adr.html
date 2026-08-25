@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>ADR · почему A, не B</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="04-adr">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · takeaway Java / Gradle / Selenide</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">04 · adr</div>
+    </div>
+  </header>
+
+  <h1 class="h1">ADR — почему выбрали A, а не B</h1>
+  <p class="lead">Пишем, когда решение <strong>дорого откатывать</strong>: все этажи закупили один тип чайника. Не пишем: «сегодня Earl Grey» (это промпт) и «поставь JDK 21» (это RAG / rule).</p>
+
+  <div class="body">
+    <div class="grid-12" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">каркас · ≤ 40 строк · docs/adr/NNN-*.md</p></div>
+        <div class="panel__body">
+          <pre># ADR NNN: короткий заголовок-решение
+Статус: предложено | принято | отменено
+Контекст: какая развилка (A vs B).
+Решение: что выбрали (1–5 пунктов).
+Последствия: что теперь нельзя / что стало проще.
+RAG: id чанков, которые держат «как», не «почему».</pre>
+        </div>
+      </section>
+      <section class="card card--adr">
+        <h2 class="sec">Чайник</h2>
+        <p>Электрический, не самовар: скорость важнее ритуала. Без ADR стажёр каждый раз спорит «а давайте самовар».</p>
+        <h2 class="sec" style="margin-top:10px">Автотест на логин</h2>
+        <p>401 JSON — слой <code>api</code>, не новый e2e-клик. Это <strong>ADR 009</strong>. Факт селектора — RAG, не ADR.</p>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">005 · screenshot — slice, не слой</p></div>
+        <div class="panel__body">
+          <p>Хочется «ярус скриншотов». Пиксельный diff — тот же браузерный сценарий, другой <strong>отбор</strong>.</p>
+          <ul>
+            <li><code>*ScreenshotTests</code> остаются <code>@Layer("e2e")</code></li>
+            <li>Отбор: <code>@Tag("screenshot")</code> + job mock/stage</li>
+            <li><code>@Tag("smoke")</code> — тоже slice, не ярус</li>
+          </ul>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">006 · одна заметка, HTTP как RFC</p></div>
+        <div class="panel__body">
+          <p>Продукт: одна заметка на пользователя, <code>/api/note</code>. Глаголы — как в RFC, таблица статусов — RAG <code>crud-http</code>.</p>
+          <p class="tiny muted">Номер 006 — только пак takeaway. Не путать с monorepo ADR 006 (<code>allurerc</code>).</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="do"><b>Do</b>Ярус vs slice (005) · Rest Assured vs e2e на 401 (009) · DS header не форк (008). URL из properties — rule, не ADR.</div>
+      <div class="dont"><b>Don't</b>Дублировать skill внутри ADR. Не писать ADR на каждый новый тест. Не менять таблицу <code>@Layer</code> без ADR.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Чанк «когда»: <code>rag/adr-when.md</code> · stub: <code>_templates/adr-stub.md</code></span>
+    <span>Канон login: <code>docs/adr/009-login-401-is-api.md</code> · slice: <code>005-screenshot-not-layer.md</code></span>
+    <span>занятие 4</span>
+  </footer>
+</article>
+</body>
+</html>

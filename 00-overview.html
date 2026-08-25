@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Обзор · Rule · Skill · RAG · ADR</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="00-overview">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · takeaway Java / Gradle / Selenide</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">00 · общая карта</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Четыре файла вместо одного промпта</h1>
+  <p class="lead">Промпт умирает вместе с чатом. <strong>Rule, skill, RAG и ADR лежат в git</strong> — следующий агент читает их, а не вашу память. Один файл на 500 строк — антипаттерн.</p>
+
+  <div class="body">
+    <div class="grid-4" style="display:grid;gap:8px">
+      <section class="card card--skill">
+        <div class="card__label"><span class="card__name">Skill</span><span class="card__q">Как сделать задачу?</span></div>
+        <p>Маршрутный лист: When → шаги → DoD.</p>
+        <p class="tiny muted"><code>docs/agent-skills/&lt;name&gt;/SKILL.md</code><br>Читают по промпту. 80–200 строк.</p>
+      </section>
+      <section class="card card--rule">
+        <div class="card__label"><span class="card__name">Rule</span><span class="card__q">Что нельзя всегда?</span></div>
+        <p>ПДД: лимиты и defaults на каждый чат.</p>
+        <p class="tiny muted"><code>.clinerules/</code> · <code>AGENTS.md</code><br>Авто (toggle). 10–80 строк.</p>
+      </section>
+      <section class="card card--rag">
+        <div class="card__label"><span class="card__name">RAG</span><span class="card__q">Откуда факт?</span></div>
+        <p>Карточка знания: команда, якорь, контракт.</p>
+        <p class="tiny muted"><code>docs/agent-skills/rag/&lt;id&gt;.md</code><br>2–4 файла на задачу. Один id = файл.</p>
+      </section>
+      <section class="card card--adr">
+        <div class="card__label"><span class="card__name">ADR</span><span class="card__q">Почему A, не B?</span></div>
+        <p>Решение, которое дорого откатывать.</p>
+        <p class="tiny muted"><code>docs/adr/NNN-*.md</code><br>Skill ссылается. ≤ ~40 строк.</p>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">простой мир · чайник</p></div>
+        <div class="panel__body">
+          <pre>Человек: «Сделай чай»
+        ↓
+Rule  → не включать пустой; не оставлять без присмотра
+Skill → вода до метки → кнопка → клик → чашка
+RAG   → на 4 этаже кнопка СЛЕВА; кипяток ≈ 100 °C
+ADR   → электрический, не самовар: скорость &gt; ритуал</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">прогон e2e slice</p></div>
+        <div class="panel__body">
+          <pre>Вы: «Прогони e2e»
+        ↓
+Rule  → tags e2e, не full suite; не commit; всегда -Denv
+Skill → qa-smoke-debug: app UP → Gradle → Allure → flaky
+RAG   → ci-gradle-args · cfg-stands · po-fluent
+ADR   → screenshot — slice, не @Layer  (005)</pre>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-21" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">мини-quiz · куда класть</p></div>
+        <div class="panel__body" style="padding-top:4px">
+          <table class="kv">
+            <thead><tr><th>Ситуация</th><th>Skill</th><th>Rule</th><th>RAG</th><th>ADR</th></tr></thead>
+            <tbody>
+              <tr><td>Не коммитить без OK</td><td></td><td><span class="mark mark--y">✓</span></td><td></td><td></td></tr>
+              <tr><td>Порядок: слой → PO → прогон</td><td><span class="mark mark--y">✓</span></td><td></td><td></td><td></td></tr>
+              <tr><td>Селекторы только в Page Object</td><td></td><td></td><td><span class="mark mark--y">✓</span></td><td></td></tr>
+              <tr><td>Screenshot не ярус пирамиды</td><td></td><td></td><td></td><td><span class="mark mark--y">✓</span></td></tr>
+              <tr><td>401 JSON не новый e2e-клик</td><td></td><td></td><td></td><td><span class="mark mark--y">✓</span></td></tr>
+              <tr><td>DoD после прогона</td><td><span class="mark mark--y">✓</span></td><td></td><td></td><td></td></tr>
+              <tr><td>E2e = <code>-DincludeTags=e2e</code></td><td></td><td><span class="mark mark--y">✓</span></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="card card--muted">
+        <h2 class="sec">Как агент это видит</h2>
+        <p>В IDE <strong>rule включается сам</strong>. Skill читают фразой «прочитай SKILL.md». RAG — 2–4 пути, которые назвал skill. ADR — цитата «почему так».</p>
+        <p class="tiny muted" style="margin-top:6px">Наращивание: skill → + rule → + RAG (занятие 3) → + ADR (занятие 4). Листы 10–13 — тот же сюжет с выключенными слоями. Живой login: 30–35 (Context — сцена, не слой). <strong>main</strong> — логин / items, без note. <strong>develop</strong> — заметка влита, ярусы takeaway 6/6.</p>
+      </section>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Пак: <code>docs/agent-skills/PACK.md</code></span>
+    <span>Rule 01: один task <code>test</code> + tags · <code>@Tag("smoke")</code> — prod slice (ADR 005)</span>
+    <span>занятия 2–4</span>
+  </footer>
+</article>
+</body>
+</html>

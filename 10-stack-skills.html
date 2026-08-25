@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Стек · только Skill</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="10-stack-skills">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · наращивание слоёв</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">10 · skills</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Только skill: есть маршрут, нет тормозов</h1>
+  <p class="lead">Агент знает <strong>порядок шагов и DoD</strong>. Не знает, чего нельзя. Без rule он может включить пустой чайник, запустить full suite и закоммитить «чтобы не потерялось».</p>
+
+  <div class="body grid-rail" style="display:grid;gap:10px">
+    <aside>
+      <ol class="tower">
+        <li class="tower__item tower__item--skill is-on"><b>Skill</b> шаги + DoD</li>
+        <li class="tower__item tower__item--rule">Rule · лимиты</li>
+        <li class="tower__item tower__item--rag">RAG · факты</li>
+        <li class="tower__item tower__item--adr">ADR · почему</li>
+      </ol>
+      <p class="stack-note" style="margin-top:8px">Снизу вверх — как наращиваем на курсе. В IDE rule потом включится сам.</p>
+    </aside>
+    <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+      <div class="grid-2" style="display:grid;gap:8px">
+        <section class="panel">
+          <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">чайник</p></div>
+          <div class="panel__body">
+            <pre>Skill → 1) вода  2) кнопка  3) клик  4) чашка
+DoD   → чай в чашке
+
+Ломается:
+  · чайник пустой (нет rule)
+  · кнопка справа — другая кухня (нет RAG)
+  · «а давайте самовар» (нет ADR)</pre>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">прогон e2e slice · qa-smoke-debug</p></div>
+          <div class="panel__body">
+            <pre>1. App UP (:8800 / UI :9821)
+2. Gradle slice → exit code
+3. Allure results
+4. Flaky → -Dtest=Class#method × 3
+
+Ломается:
+  · ./gradlew test без tags
+  · git commit «для истории»
+  · URL localhost в новом тесте</pre>
+          </div>
+        </section>
+      </div>
+      <p class="prompt">Прочитай docs/agent-skills/qa-smoke-debug/SKILL.md.
+E2e slice. (Rules выключены — так не оставляем на зачёте.)</p>
+      <div class="dont"><b>Зачем следующий слой</b>Skill без rule — хороший чеклист в мире без запретов. На курсе сразу включаем Rules ON. Следующий лист: + ПДД.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Слой 1 из 4</span>
+    <span>Skill один не заменяет rule / RAG / ADR</span>
+    <span>занятие 2 · старт</span>
+  </footer>
+</article>
+</body>
+</html>

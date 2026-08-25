@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>ДЗ · main → develop</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="40-homework">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · два промпта · сдача одним блоком</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">40 · ДЗ · main → develop</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Два промпта: стенд, потом план — не тесты</h1>
+  <p class="lead"><code>main</code> — логин / items, без note. <code>develop</code> — заметка влита, ярусы takeaway на upstream <strong>6/6</strong>. Промпты: <code>HOMEWORK.md</code>. В чат курса — только блок «Сдача ДЗ».</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">ДЗ-1 · main · живой стенд</p></div>
+        <div class="panel__body">
+          <p class="tiny muted">Форк (не clone qa-guru) → <code>git checkout main</code> → compose → e2e. Note не писать.</p>
+          <p class="prompt">Skill qa-smoke-debug
+RAG ci-gradle-args · cfg-stands · allure-attach
+Не всю папку rag/. Не prod. Не commit.</p>
+          <h2 class="sec">Сдача ДЗ (в чат курса)</h2>
+          <table class="kv kv--dense">
+            <tbody>
+              <tr><td>Форк / origin</td><td>свой репо, не qa-guru</td></tr>
+              <tr><td>Ветка</td><td><code>main</code></td></tr>
+              <tr><td>Health</td><td><code>curl -sf :8800/api/health</code> → 2xx</td></tr>
+              <tr><td>UI</td><td><code>http://localhost:9821/</code> (не :9811)</td></tr>
+              <tr><td>Команда</td><td><code>-Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock</code></td></tr>
+              <tr><td>Прогон</td><td>exit 0, failed 0, <code>allure-results</code> не пустой</td></tr>
+              <tr><td>Статус</td><td>сдано / не сдано</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">ДЗ-2 · develop · note + план</p></div>
+        <div class="panel__body">
+          <p class="tiny muted">После ДЗ-1, новый чат. Checkout <code>develop</code> → rebuild. Фичу и тесты note не писать (существующие не трогать). План = inventory; если 6/6 — дыр нет.</p>
+          <p class="prompt">Skills qa-coverage-audit · qa-pyramid-plan
+ADR 006 · RAG test-pyramid · crud-http · cfg-stands
+qa-make-full-pyramid — только после «следующий ярус».</p>
+          <h2 class="sec">Сдача ДЗ (в чат курса)</h2>
+          <table class="kv kv--dense">
+            <tbody>
+              <tr><td>Ветка</td><td><code>develop</code>, не merge в main</td></tr>
+              <tr><td>Фича жива</td><td>GET <code>/api/note</code> без токена → <strong>401</strong> (не 404)</td></tr>
+              <tr><td>Код</td><td><code>NoteController</code> + <code>note-panel</code> — да</td></tr>
+              <tr><td>Покрытие</td><td>takeaway note: факт из дерева (upstream <strong>6/6</strong>)</td></tr>
+              <tr><td>План</td><td>таблица сценарий × ярус; не копировать отчёт слепо</td></tr>
+              <tr><td>Дыры</td><td>нет, если 6/6; иначе ярус + якорь + стенды</td></tr>
+              <tr><td>Следующий</td><td>n/a если 6/6 · тесты в этом ДЗ не писались</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">канон плана · иначе незачёт</p></div>
+      <div class="panel__body" style="padding-top:4px">
+        <table class="kv kv--dense">
+          <thead><tr><th>Так</th><th>Не так</th></tr></thead>
+          <tbody>
+            <tr><td>Синглтон <code>/api/note</code>: PUT 201/200, PATCH только api, один e2e happy-path</td><td>POST+409 «already exists»; e2e на все глаголы</td></tr>
+            <tr><td>Slice <code>smoke</code> / <code>screenshot</code> / <code>mock</code> — не колонка яруса (ADR 005)</td><td><code>@Layer("screenshot")</code>, <code>@Layer("smoke")</code></td></tr>
+            <tr><td>Delete на prod — фабрика+teardown (ADR 006), не сид <code>user1</code></td><td><code>if (prod)</code> в тесте; снести витрину</td></tr>
+            <tr><td>«100% пирамиды» = сценарий на своём <code>@Layer</code></td><td>100% строк JaCoCo; добивать все ярусы одним чатом</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="do"><b>Do</b>Один блок сдачи в конце ответа. Origin = форк. Compose с <code>--build</code> после смены ветки. Дальше отдельные чаты: unit → integration → component → api → e2e → manual.</div>
+      <div class="dont"><b>Don't</b>Clone qa-guru. Писать note на main. Реализовывать фичу на develop. Писать тесты note в ДЗ-2. Commit / push / <code>reset --hard</code>. Prod без <code>remoteUrl</code>.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Тексты промптов: <code>HOMEWORK.md</code></span>
+    <span>Stage ← push develop · prod ← push main (CI)</span>
+    <span>занятия 2 и 4</span>
+  </footer>
+</article>
+</body>
+</html>
