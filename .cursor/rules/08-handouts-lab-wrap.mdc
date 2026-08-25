@@ -1,0 +1,25 @@
+---
+description: 36-login-lab — не рвать Java переносом; cli = только шелл
+globs: 36-login-lab.html,css/**,js/**
+alwaysApply: false
+---
+
+# Lab 36
+
+## Wrap
+
+Не «впихивать» Java через перенос. Узкая колонка + `pre-wrap` / `break-word` рвёт `shouldShowErrorWhenPasswordIsWrong`.
+
+Запрещено на `.lab-code` / `.lab-ln`: `white-space: pre-wrap`, `overflow-wrap: break-word`, `word-break: break-word`.
+
+Нужно: `body.lab pre` → `white-space: pre !important`; скролл `overflow-x: auto`; `.lab-ln { width: max-content }`.
+
+`paintLines` — `.join("")` (не `"\n"`): `.lab-ln` уже `display:block`.
+
+## cli · терминал = шелл
+
+В `runLines` / `panel("cli")` только команды и `#`-комментарии: `./gradlew`, `git`, `cd`, `pytest`.
+
+Java сюда нельзя: `open("http://…")`, `//`, `;` в конце, `$()`, `loginPage`. URL в Java — в панели `LoginTests` / `LoginPage`.
+
+После правки CSS/JS: `python3 check-lab-wrap.py` (ещё из `assemble-index.sh` и CI).
