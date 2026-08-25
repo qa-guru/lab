@@ -289,6 +289,44 @@ if legend and "z-index: 6" not in legend:
 if "class=\"lab-dock\"" not in html and "class='lab-dock'" not in html:
     errors.append("toggles must live in `.lab-dock` (sticky), not inside the prompt card")
 
+SCENE_PRESETS = ("full", "empty", "meta", "noct")
+FORBIDDEN_PRESETS = (
+    "minus-skill",
+    "minus-rule",
+    "minus-rag",
+    "minus-adr",
+    "skill-rule",
+    "skill-rag",
+)
+html_presets = re.findall(r'data-preset="([^"]+)"', html)
+if tuple(html_presets) != SCENE_PRESETS:
+    errors.append(
+        "36 .lab-presets must be exactly full / empty / meta / noct, got "
+        + repr(html_presets)
+    )
+js_presets = re.findall(r'\{ id: "([^"]+)"', js)
+if tuple(js_presets) != SCENE_PRESETS:
+    errors.append(
+        "PRESETS ids must be exactly full / empty / meta / noct, got "
+        + repr(js_presets)
+    )
+for pid in FORBIDDEN_PRESETS:
+    if pid in html_presets or pid in js_presets:
+        errors.append(f"ablation pill `{pid}` — use toggles/hash, not a preset button")
+if "lab-presets-pack" in html or "lab-presets-pack" in css:
+    errors.append("`.lab-presets-pack` is ablation chrome — 36 keeps one `.lab-presets` row")
+if html.count('class="lab-presets"') != 1:
+    errors.append("36 must have exactly one `.lab-presets` group")
+lbl = re.search(
+    r'class="lab-presets__lbl"[^>]*>\s*([^<]+?)\s*<',
+    html,
+)
+if not lbl or lbl.group(1).strip() != "Слои":
+    errors.append("36 `.lab-presets__lbl` must be `Слои`")
+for bad in ("32–33", "Лист 32", "Лист 33"):
+    if bad in html:
+        errors.append(f"36 toolbar/copy must not mention `{bad}`")
+
 if "if (n === 4 && ctx)" not in js:
     errors.append(
         "verdict «тест как в репо» must require ctx — otherwise meta preset clones ideal"
