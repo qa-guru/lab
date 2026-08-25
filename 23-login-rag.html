@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Login · без RAG / с RAG</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="23-login-rag">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · пример: login / wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">23 · login · rag</div>
+    </div>
+  </header>
+
+  <h1 class="h1">RAG: факты с полки, не догадки 7b</h1>
+  <p class="lead">Skill говорит «прочитай 2–4 чанка». <strong>Без RAG</strong> модель выдумывает <code>$("input")</code> и копирует happy path. <strong>С RAG</strong> — <code>data-testid</code>, <code>submitExpectingError</code>, текст ошибки, стенды.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">без чанков · «на глаз»</p></div>
+        <div class="panel__body">
+          <pre>// в LoginTests.java
+$("#login").setValue("user1");
+$("#pass").setValue("123");
+$(".btn-primary").click();
+$(".alert").shouldHave(text("Invalid"));
+
+// или с вкладки happy path:
+fillAndSubmitForm("user1", "wrongpassword")
+  .shouldHaveWelcomeMessage("…");  // ждёт HomePage
+
+@Step("Type password: {password}")
+@Step() на классе LoginPage</pre>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">skill назвал чанки · агент их прочитал</p></div>
+        <div class="panel__body">
+          <pre>po-locators   LoginPage:
+  $("[data-testid='login-input']")
+  $("[data-testid='error-message']")
+
+po-step       @Step на методах, не на классе
+              Type password  // не {password}
+
+test-negative typeUsername → typePassword
+              → submitExpectingError
+              «Wrong login or password»
+
+cfg-stands    URL из config; user1 есть на
+              pipeline / stage / prod
+              (wrong password сид не сносит)</pre>
+        </div>
+      </section>
+    </div>
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="dont"><b>Не RAG</b>Скармливать всю папку <code>rag/</code>. «Прочитай стеллаж» → 7b тонет. Task <code>testE2e</code> — это rule 01, не карточка факта.</div>
+      <div class="do"><b>2–4 id</b>Для этого промпта: <code>po-locators</code> · <code>po-step</code> · <code>test-negative</code> · <code>cfg-stands</code>. JSON 401 — ADR 009 (лист 24); факт api-кейса — <code>test-api-layer</code>, его читают после ADR.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Карта: <code>docs/agent-skills/rag/README.md</code></span>
+    <span>Канон селектора: <code>pages/LoginPage.java</code></span>
+    <span>пример · rag</span>
+  </footer>
+</article>
+</body>
+</html>

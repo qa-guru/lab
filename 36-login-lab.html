@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login · что сломается без слоя</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body class="lab">
+<div class="lab-screen" id="36-login-lab" data-rule-ide="cursor">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · live: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="hd__id">36 · лаборатория</div>
+      <a class="lab-back" href="index.html#35-login-context">← листы 30–35</a>
+    </div>
+  </header>
+
+  <section class="lab-toolbar" id="lab-prompt" aria-label="Промпт">
+    <article class="panel lab-prompt">
+      <header class="panel__bar">
+        <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+        <div class="lab-ide" role="group" aria-label="Формат rules" title="меняется только файл rule">
+          <button type="button" class="lab-ide__btn is-on" data-rule-ide="cursor" aria-pressed="true">Cursor</button>
+          <button type="button" class="lab-ide__btn" data-rule-ide="cline" aria-pressed="false">Cline</button>
+          <button type="button" class="lab-ide__btn" data-rule-ide="claude" aria-pressed="false">Claude</button>
+          <button type="button" class="lab-ide__btn" data-rule-ide="codex" aria-pressed="false">Codex</button>
+        </div>
+        <p class="panel__title">промпт</p>
+      </header>
+      <div class="panel__body">
+        <p class="prompt">Добавь автотест на неуспешный логин с неправильным паролем</p>
+      </div>
+    </article>
+  </section>
+  <div class="lab-dock" aria-label="Слои и пресеты">
+    <div class="lab-toolbar__row lab-toolbar__row--controls">
+      <div class="lab-switches" role="group" aria-label="Слои вкл/выкл">
+        <button type="button" class="lab-sw lab-sw--ctx is-on" data-layer="ctx" aria-pressed="true">
+          <span class="lab-sw__name">Context</span>
+          <span class="lab-sw__q">контекст</span>
+        </button>
+        <button type="button" class="lab-sw lab-sw--skill is-on" data-layer="skill" aria-pressed="true">
+          <span class="lab-sw__name">Skill</span>
+          <span class="lab-sw__q">как</span>
+        </button>
+        <button type="button" class="lab-sw lab-sw--rule is-on" data-layer="rule" aria-pressed="true">
+          <span class="lab-sw__name">Rule</span>
+          <span class="lab-sw__q">нельзя</span>
+        </button>
+        <button type="button" class="lab-sw lab-sw--rag is-on" data-layer="rag" aria-pressed="true">
+          <span class="lab-sw__name">RAG</span>
+          <span class="lab-sw__q">факт</span>
+        </button>
+        <button type="button" class="lab-sw lab-sw--adr is-on" data-layer="adr" aria-pressed="true">
+          <span class="lab-sw__name">ADR</span>
+          <span class="lab-sw__q">почему</span>
+        </button>
+      </div>
+      <div class="lab-presets" role="group" aria-label="Пресеты слоёв">
+        <span class="lab-presets__lbl">Слои</span>
+        <button type="button" class="lab-preset" data-preset="full" title="Вкладки и все четыре слоя включены">всё включено</button>
+        <button type="button" class="lab-preset" data-preset="empty" title="Вкладки открыты, Skill / Rule / RAG / ADR выключены">включен только контекст</button>
+        <button type="button" class="lab-preset" data-preset="meta" title="Skill / Rule / RAG / ADR вкл, вкладки закрыты">включены только слои</button>
+        <button type="button" class="lab-preset" data-preset="noct" title="Вкладки и все слои выключены">все выключено</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="lab-stage" id="lab-board">
+    <section class="lab-ai" aria-labelledby="lab-ai-title">
+      <header class="lab-ai__hd">
+        <h2 class="lab-sec" id="lab-ai-title">Skill · Rule · RAG · ADR <span class="lab-sec__kicker">из git</span></h2>
+        <p class="lab-src-lead">Выкл — агент этот файл не читает.</p>
+      </header>
+      <div class="lab-ai__grid">
+<article class="panel lab-src lab-src--skill" data-src="skill">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">skill · SKILL.md</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">docs/agent-skills/qa-write-test/SKILL.md</p>
+            <pre># Разработай автотест
+
+RAG (этот промпт, 4 id):
+po-locators, po-step, test-negative, cfg-stands.
+ADR: docs/adr/009-login-401-is-api.md
+
+## When
+«напиши e2e», «добавь negative login»
+
+## Do not
+- CSS/xpath в *Tests
+- новый ChromeDriver в тесте
+Commit / URL / -Denv — rule
+401 vs форма — ADR 009
+
+## Steps
+1. Один @Layer
+2. Стенды pipeline / stage / prod
+3. Расширь PO, локаторы не в тесте
+4. @Tag яруса + positive/negative
+5. ./gradlew test -Denv=ci -DincludeTags=e2e \
+     -Dtest=LoginTests#&lt;method&gt;
+
+## DoD
+слой, стенды, @Step на PO, exit</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">как попадает: «прочитай SKILL.md»</p>
+          <pre class="lab-code">When  напиши e2e / покрой логин
+Don't CSS в *Tests, ChromeDriver
+RAG   po-locators · po-step · test-negative · cfg-stands
+ADR   009 — не решай 401 в чате
+Шаги  слой → стенды → PO → -Dtest=
+DoD   слой, стенды, @Step на PO, exit</pre>
+        </div>
+      </article>
+<article class="panel lab-src lab-src--rule" data-src="rule">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">
+            <span data-flavor="cursor">rule · .cursor/rules</span>
+            <span data-flavor="cline">rule · .clinerules</span>
+            <span data-flavor="claude">rule · AGENTS.md + .clinerules</span>
+            <span data-flavor="codex">rule · AGENTS.md</span>
+          </p>
+          <div class="lab-src__pop" data-flavor="cursor">
+            <p class="lab-src__pop-file">.cursor/rules/01…04.mdc + AGENTS.md</p>
+            <pre># 01-qa-java-gradle.mdc
+---
+alwaysApply: false
+globs: tests/java/.../**
+---
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -DexcludeTags=screenshot,mock
+# task testE2e нет
+# @Tag("smoke") — prod slice, не эта команда (ADR 005)
+
+# 02-git-safety.mdc
+---
+alwaysApply: true
+---
+не commit / push / reset --hard без OK
+
+# 03-env-and-stand.mdc
+всегда -Denv=
+URL не в Java
+pipeline / stage / prod
+
+# 04-one-task-one-layer.mdc
+один task = один ярус</pre>
+          </div>
+          <div class="lab-src__pop" data-flavor="cline">
+            <p class="lab-src__pop-file">.clinerules/01…04.md + AGENTS.md</p>
+            <pre># 01-qa-java-gradle.md
+---
+paths: tests/java/.../**
+---
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -DexcludeTags=screenshot,mock
+# task testE2e нет
+# @Tag("smoke") — prod slice, не эта команда (ADR 005)
+
+# 02-git-safety.md
+не commit / push / reset --hard без OK
+
+# 03-env-and-stand.md
+всегда -Denv=
+URL не в Java
+pipeline / stage / prod
+
+# 04-one-task-one-layer.md
+один task = один ярус</pre>
+          </div>
+          <div class="lab-src__pop" data-flavor="claude">
+            <p class="lab-src__pop-file">AGENTS.md + .clinerules/01…04.md</p>
+            <pre># в takeaway нет CLAUDE.md / .claude/rules
+# те же лимиты: AGENTS.md + .clinerules
+
+# AGENTS.md
+не commit / push / reset --hard без OK
+URL из properties, всегда -Denv=
+один task = один @Layer
+pipeline / stage / prod
+
+# .clinerules/01-qa-java-gradle.md
+---
+paths: tests/java/.../**
+---
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -DexcludeTags=screenshot,mock
+# task testE2e нет
+# @Tag("smoke") — prod slice, не эта команда (ADR 005)
+
+# 02-git-safety.md
+не commit / push / reset --hard без OK
+
+# 03-env-and-stand.md
+pipeline / stage / prod
+
+# 04-one-task-one-layer.md
+один task = один ярус</pre>
+          </div>
+          <div class="lab-src__pop" data-flavor="codex">
+            <p class="lab-src__pop-file">AGENTS.md · корень репо</p>
+            <pre># AGENTS.md
+# QA Agent — takeaway Java/Selenide
+
+## E2e
+cd tests/java/tests-java-...-selenide
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -DexcludeTags=screenshot,mock
+# task testE2e нет
+# @Tag("smoke") — prod slice, не эта команда (ADR 005)
+
+## Ограничения
+не commit / push / reset --hard без OK
+URL из properties, не localhost в коде
+один task = один @Layer
+pipeline / stage / prod</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">
+            <span data-flavor="cursor">как попадает: сам, если alwaysApply / globs</span>
+            <span data-flavor="cline">как попадает: сам, если Rules ON</span>
+            <span data-flavor="claude">как попадает: AGENTS.md + .clinerules (в репо нет CLAUDE.md)</span>
+            <span data-flavor="codex">как попадает: сам, читает AGENTS.md</span>
+          </p>
+          <pre class="lab-code">01  e2e = tags + -Denv, task testE2e нет
+02  не commit / push без OK
+03  URL только из properties, всегда -Denv
+04  один task = один ярус</pre>
+        </div>
+      </article>
+<article class="panel lab-src lab-src--rag" data-src="rag">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">rag · po-locators · po-step · test-negative · cfg-stands</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">docs/agent-skills/rag/*.md</p>
+            <pre># po-locators
+loginInput  = $("[data-testid='login-input']")
+errorMessage= $("[data-testid='error-message']")
+# не $("input") в *Tests
+
+# po-step
+@Step на методах PO, не на классе
+@Step("Type password")     // не {password}
+не Allure.step в *Tests + @Step
+
+# test-negative
+typeUsername().typePassword()
+          .submitExpectingError()
+# не fillAndSubmitForm — ждёт HomePage
+текст «Wrong login or password»
+@Tag("negative")
+
+# cfg-stands
+URL из config
+user1 есть на pipeline / stage / prod</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">как попадает: skill назвал эти 2–4 файла</p>
+          <pre class="lab-code">data-testid только в LoginPage
+typeUsername / submitExpectingError
+@Step на методах PO, не на классе
+пароль не в тексте шага
+текст «Wrong login or password»
+стенды pipeline / stage / prod</pre>
+        </div>
+      </article>
+<article class="panel lab-src lab-src--adr" data-src="adr">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">adr · 009-login-401-is-api.md</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">docs/adr/009-login-401-is-api.md</p>
+            <pre># ADR 009: UI-текст e2e, 401 JSON — api
+Статус: принято
+
+Контекст: неверный пароль — форма и JSON.
+В чате хочется второй e2e «на 401».
+
+Решение:
+- текст на форме →
+  LoginTests#shouldShowErrorWhenPasswordIsWrong
+- 401 JSON → уже
+  AuthApiTests#loginWithInvalidPassword
+- новый браузерный тест «на 401» не пишем
+
+Последствия:
+- не $("pre") «401»
+- селекторы и текст ошибки — RAG, не ADR</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">как попадает: skill ссылается, сам не копирует</p>
+          <pre class="lab-code">401 JSON → AuthApiTests#loginWithInvalidPassword
+текст на форме → LoginTests e2e
+не $("pre") «401»</pre>
+        </div>
+      </article>
+      </div>
+    </section>
+
+    <div class="lab-compare">
+      <div class="lab-legend">
+        <div class="lab-legend__col lab-legend--ctx">
+          <h2 class="lab-sec" id="lab-classic-title">Контекст <span class="lab-sec__kicker">что открыто</span></h2>
+        </div>
+        <div class="lab-legend__col lab-legend--ideal">
+          <h2 class="lab-sec" id="lab-ideal-title">Идеальный <span class="lab-sec__kicker">все слои</span></h2>
+        </div>
+        <div class="lab-legend__col lab-legend--expected" id="lab-expected-col">
+          <h2 class="lab-sec" id="lab-result-title">Ожидаемый <span class="lab-sec__kicker">с тумблерами</span></h2>
+        </div>
+      </div>
+      <div class="lab-why-row" aria-label="Почему так">
+        <aside class="lab-why-bar lab-why-bar--ctx" id="lab-why-ctx-col">
+          <p class="lab-diag" id="lab-why-ctx-diag">читает вкладки.</p>
+          <div class="lab-why" id="lab-why-ctx"></div>
+        </aside>
+        <aside class="lab-why-bar lab-why-bar--ideal is-match" id="lab-why-ideal-col">
+          <p class="lab-src-lead" id="lab-why-ideal-lead">Вкладки открыты, Skill / Rule / RAG / ADR вкл.</p>
+          <p class="lab-diag is-ok" id="lab-why-ideal-diag">Тест как в репо.</p>
+          <div class="lab-why" id="lab-why-ideal"></div>
+        </aside>
+        <aside class="lab-why-bar lab-why-bar--expected" id="lab-why-col">
+          <p class="lab-src-lead" id="lab-why-expected-lead">Какой слой выключили и что из-за этого уехало.</p>
+          <p class="lab-diag is-ok" id="lab-why-diag">Все слои включены. Тест как в репо.</p>
+          <div class="lab-why" id="lab-why"></div>
+        </aside>
+      </div>
+    <div class="lab-row" data-row="test">
+<article class="panel lab-src lab-src--ctx" data-src="ctx" data-slot="test">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">test · LoginTests.java</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">tests/e2e/LoginTests.java · вкладка</p>
+            <pre>@Layer("e2e")
+@Epic("Authentication")
+@Feature("Login")
+class LoginTests extends TestBase {
+
+  @Test
+  @Tag("e2e")
+  @Tag("smoke")
+  @Tag("positive")
+  @DisplayName("User is logged in with valid credentials")
+  void shouldLoginWithValidCredentials() {
+    loginPage.openPage()
+        .fillAndSubmitForm("user1", "password1")
+        .shouldHaveWelcomeMessage("Welcome, user1!");
+  }
+
+  // shouldShowErrorWhenPasswordIsWrong
+  // на занятии комментируют —
+  // иначе skill скажет «не дублируй»
+}</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">вкладка: успешный логин</p>
+          <pre class="lab-code">@Layer("e2e")
+@Epic("Authentication")
+@Feature("Login")
+class LoginTests extends TestBase {
+
+  @Test
+  @Tag("e2e")
+  @Tag("smoke")
+  @Tag("positive")
+  @DisplayName("User is logged in with valid credentials")
+  void shouldLoginWithValidCredentials() {
+    loginPage.openPage()
+        .fillAndSubmitForm("user1", "password1")
+        .shouldHaveWelcomeMessage("Welcome, user1!");
+  }
+}</pre>
+        </div>
+      </article>
+      <div class="lab-cell lab-cell--ideal" data-paint="ideal" data-slot="test"></div>
+      <div class="lab-cell lab-cell--expected" data-paint="expected" data-slot="test"></div>
+    </div>
+    <div class="lab-row" data-row="page">
+<article class="panel lab-src lab-src--ctx" data-src="ctx" data-slot="page">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">page · LoginPage.java</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">pages/LoginPage.java · вкладка</p>
+            <pre>class LoginPage {
+
+  loginInput    = $("[data-testid='login-input']");
+  passwordInput = $("[data-testid='password-input']");
+  submitButton  = $("[data-testid='submit-button']");
+
+  @Step("Open login page")
+  LoginPage openPage() {
+    open("/login");
+    return this;
+  }
+
+  @Step("Fill and submit form")
+  HomePage fillAndSubmitForm(String username, String password) {
+    typeUsername(username).typePassword(password).submit();
+    return new HomePage();
+  }
+
+  @Step("Type username: {username}")
+  LoginPage typeUsername(String username) {
+    loginInput.setValue(username);
+    return this;
+  }
+
+  @Step("Type password")
+  LoginPage typePassword(String password) {
+    passwordInput.setValue(password);
+    return this;
+  }
+}</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">вкладка: форма, happy path, @Step на методах</p>
+          <pre class="lab-code">class LoginPage {
+
+  loginInput    = $("[data-testid='login-input']");
+  passwordInput = $("[data-testid='password-input']");
+  submitButton  = $("[data-testid='submit-button']");
+
+  @Step("Open login page")
+  LoginPage openPage() {
+    open("/login");
+    return this;
+  }
+
+  @Step("Fill and submit form")
+  HomePage fillAndSubmitForm(String username, String password) {
+    typeUsername(username).typePassword(password).submit();
+    return new HomePage();
+  }
+
+  @Step("Type username: {username}")
+  LoginPage typeUsername(String username) {
+    loginInput.setValue(username);
+    return this;
+  }
+
+  @Step("Type password")
+  LoginPage typePassword(String password) {
+    passwordInput.setValue(password);
+    return this;
+  }
+}</pre>
+        </div>
+      </article>
+      <div class="lab-cell lab-cell--ideal" data-paint="ideal" data-slot="page"></div>
+      <div class="lab-cell lab-cell--expected" data-paint="expected" data-slot="page"></div>
+    </div>
+    <div class="lab-row" data-row="home">
+<article class="panel lab-src lab-src--ctx" data-src="ctx" data-slot="home">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">page · HomePage.java</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">pages/HomePage.java · вкладка</p>
+            <pre>class HomePage {
+
+  welcomeMessage = $("[data-testid='welcome-message']");
+
+  @Step("Verify welcome message: {message}")
+  HomePage shouldHaveWelcomeMessage(String message) {
+    welcomeMessage.shouldHave(text(message));
+    return this;
+  }
+}</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">fillAndSubmitForm возвращает HomePage · @Step на методе</p>
+          <pre class="lab-code">class HomePage {
+
+  welcomeMessage = $("[data-testid='welcome-message']");
+
+  @Step("Verify welcome message: {message}")
+  HomePage shouldHaveWelcomeMessage(String message) {
+    welcomeMessage.shouldHave(text(message));
+    return this;
+  }
+}</pre>
+        </div>
+      </article>
+      <div class="lab-cell lab-cell--ideal" data-paint="ideal" data-slot="home"></div>
+      <div class="lab-cell lab-cell--expected" data-paint="expected" data-slot="home"></div>
+    </div>
+    <div class="lab-row" data-row="base">
+<article class="panel lab-src lab-src--ctx" data-src="ctx" data-slot="base">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">base · TestBase.java</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">tests/TestBase.java</p>
+            <pre>class TestBase {
+  protected LoginPage loginPage = new LoginPage();
+  protected static final TestConfig config =
+      ConfigReader.testConfig;
+
+  @BeforeAll
+  static void setup() {
+    Configuration.baseUrl =
+        ConfigReader.resolveWebBaseUrl();
+    Configuration.browser = config.browser();
+    Configuration.browserSize = config.browserSize();
+    Configuration.headless = config.headless();
+  }
+  // не new ChromeDriver() в тесте
+}</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">вкладкой не открываем — видит сам</p>
+          <pre class="lab-code">protected LoginPage loginPage = new LoginPage();
+
+@BeforeAll
+static void setup() {
+  Configuration.baseUrl = ConfigReader.resolveWebBaseUrl();
+  Configuration.browser = config.browser();
+  Configuration.browserSize = config.browserSize();
+  Configuration.headless = config.headless();
+}
+// не new ChromeDriver() в тесте</pre>
+        </div>
+      </article>
+      <div class="lab-cell lab-cell--ideal" data-paint="ideal" data-slot="base"></div>
+      <div class="lab-cell lab-cell--expected" data-paint="expected" data-slot="base"></div>
+    </div>
+    <div class="lab-row" data-row="props">
+<article class="panel lab-src lab-src--ctx" data-src="ctx" data-slot="props">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">props · ci.properties</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">config/ci.properties · -Denv=ci</p>
+            <pre>baseUrl=http://localhost:9821/
+browser=chrome
+browserVersion=148
+browserSize=1920x1280
+headless=true</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">не трогал — URL не в Java</p>
+          <pre class="lab-code">baseUrl=http://localhost:9821/
+browser=chrome
+browserVersion=148
+browserSize=1920x1280
+headless=true</pre>
+        </div>
+      </article>
+      <div class="lab-cell lab-cell--ideal" data-paint="ideal" data-slot="props"></div>
+      <div class="lab-cell lab-cell--expected" data-paint="expected" data-slot="props"></div>
+    </div>
+    <div class="lab-row" data-row="gradle">
+<article class="panel lab-src lab-src--ctx" data-src="ctx" data-slot="gradle">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">build · build.gradle</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">tests/java/tests-java-gradle-junit5-allure3-selenide/build.gradle</p>
+            <pre>javaVersion     = 21
+junitVersion    = '5.11.4'
+selenideVersion = '7.17.0'
+allureVersion   = '3.13.0'
+ownerVersion    = '1.0.12'
+
+testImplementation (
+  "com.codeborne:selenide:${selenideVersion}",
+  "org.junit.jupiter:junit-jupiter:${junitVersion}",
+  "io.qameta.allure:allure-selenide",
+  "org.aeonbits.owner:owner:${ownerVersion}"
+)
+
+test {
+  useJUnitPlatform {
+    def includeTagsProp = System.getProperty('includeTags')
+    if (includeTagsProp) {
+      includeTags(*(includeTagsProp.split(',')*.trim()))
+    }
+    def excludeTagsProp = System.getProperty('excludeTags')
+    if (excludeTagsProp) {
+      excludeTags(*(excludeTagsProp.split(',')*.trim()))
+    }
+  }
+  systemProperty 'env', testEnv
+}</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">вкладка: версии, -DincludeTags, -Denv=; task testE2e нет</p>
+          <pre class="lab-code">javaVersion     = 21
+junitVersion    = '5.11.4'
+selenideVersion = '7.17.0'
+allureVersion   = '3.13.0'
+ownerVersion    = '1.0.12'
+
+testImplementation (
+  "com.codeborne:selenide:${selenideVersion}",
+  "org.junit.jupiter:junit-jupiter:${junitVersion}",
+  "io.qameta.allure:allure-selenide",
+  "org.aeonbits.owner:owner:${ownerVersion}"
+)
+
+test {
+  useJUnitPlatform {
+    def includeTagsProp = System.getProperty('includeTags')
+    if (includeTagsProp) {
+      includeTags(*(includeTagsProp.split(',')*.trim()))
+    }
+    def excludeTagsProp = System.getProperty('excludeTags')
+    if (excludeTagsProp) {
+      excludeTags(*(excludeTagsProp.split(',')*.trim()))
+    }
+  }
+  systemProperty 'env', testEnv
+}</pre>
+        </div>
+      </article>
+      <div class="lab-cell lab-cell--ideal" data-paint="ideal" data-slot="gradle"></div>
+      <div class="lab-cell lab-cell--expected" data-paint="expected" data-slot="gradle"></div>
+    </div>
+    <div class="lab-row" data-row="cli">
+      <article class="panel lab-src lab-src--ctx" data-src="ctx" data-slot="cli">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">cli · терминал</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">шелл · вкладкой не открываем</p>
+            <pre># агент гоняет сам, не третья вкладка
+cd tests/java/tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -Dtest=LoginTests#shouldLoginWithValidCredentials
+# task testE2e нет</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">прогон из шелла, не Java</p>
+          <pre class="lab-code">cd tests/java/tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -Dtest=LoginTests#shouldLoginWithValidCredentials
+# task testE2e нет</pre>
+        </div>
+      </article>
+      <div class="lab-cell lab-cell--ideal" data-paint="ideal" data-slot="cli"></div>
+      <div class="lab-cell lab-cell--expected" data-paint="expected" data-slot="cli"></div>
+    </div>
+    <div class="lab-row" data-row="ci">
+<article class="panel lab-src lab-src--ctx" data-src="ctx" data-slot="ci">
+        <header class="panel__bar lab-src__hd">
+          <span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span>
+          <span class="lab-src__state">читает</span>
+          <p class="panel__title">ci · ci.yml</p>
+          <div class="lab-src__pop">
+            <p class="lab-src__pop-file">.github/workflows/ci.yml</p>
+            <pre># два флага: -Denv / -DincludeTags
+# стенд и срез. task testE2e нет.
+
+e2e-tests:
+  env:
+    LAYER: e2e
+  steps:
+    - uses: ./tests/.github/actions/e2e
+      with:
+        stand: prod
+        # внутри action:
+        # ./gradlew test -Denv=prod
+        #   -DincludeTags=e2e
+        #   -DexcludeTags=mock,screenshot</pre>
+          </div>
+        </header>
+        <div class="panel__body">
+          <p class="lab-src__load">job вызывает action, не task testE2e</p>
+          <pre class="lab-code">e2e-tests:
+  env:
+    LAYER: e2e
+  steps:
+    - uses: ./tests/.github/actions/e2e
+      with:
+        stand: prod
+# ./gradlew test -Denv=prod
+#   -DincludeTags=e2e
+#   -DexcludeTags=mock,screenshot
+# task testE2e нет</pre>
+        </div>
+      </article>
+      <div class="lab-cell lab-cell--ideal" data-paint="ideal" data-slot="ci"></div>
+      <div class="lab-cell lab-cell--expected" data-paint="expected" data-slot="ci"></div>
+    </div>
+    </div>
+  </section>
+
+  <footer class="ft">
+    <span id="lab-count">4 из 4, вкладки открыты</span>
+    <span>клавиши C S R G A · шапка — файл (клик) · тело карточки — вкл/выкл. В IDE после смены слоёв — новый агент.</span>
+    <span>печатать не надо</span>
+  </footer>
+</div>
+<script src="js/login-lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Login · project context</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="35-login-context">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">35 · context ≠ слой</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Пятая опция: сцена, не скрипт</h1>
+  <p class="lead">Project context — <strong>открытые вкладки, индекс репо, TestBase, build.gradle</strong>. Его включают всегда (лист 30). Это не пятый слой: он не отвечает ни на «как», ни на «нельзя», ни на «факт», ни на «почему».</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="card card--ctx">
+        <div class="card__label"><span class="card__name">Что такое Context</span><span class="card__q">сцена</span></div>
+        <ul>
+          <li>Вкладки: <code>LoginTests</code>, <code>LoginPage</code></li>
+          <li>Недавно открытый <code>TestBase</code></li>
+          <li>Поиск по репо / @codebase</li>
+          <li>Сигнатуры Gradle, если агент дошёл</li>
+        </ul>
+        <p class="tiny muted">Примеры «как уже сделано». Нет When, нет запрета, нет точного текста ошибки, нет развилки 401.</p>
+      </section>
+      <section class="card card--muted">
+        <div class="card__label"><span class="card__name">Чего Context не делает</span><span class="card__q">не слой</span></div>
+        <ul>
+          <li>Не skill — не заставляет выбрать один <code>@Layer</code> и DoD</li>
+          <li>Не rule — не держит «не commit» на следующем ходе</li>
+          <li>Не RAG — happy path на вкладке ≠ error path</li>
+          <li>Не ADR — не помнит, почему 401 не кликают</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">только Context · самая тихая галлюцинация</p></div>
+        <div class="panel__body">
+          <pre>// выглядит как канон — скопировал вкладку 1
+loginPage.openPage()
+        .fillAndSubmitForm("user1", "wrongpassword")
+        .shouldHaveWelcomeMessage("Welcome, user1!");
+
+// или «чуть поправил» assert, но всё ещё HomePage
+        .shouldHaveErrorMessage("Wrong password");
+
+./gradlew test          // или testE2e
+git commit -am "login"</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">эксперимент на занятии</p></div>
+        <div class="panel__body">
+          <pre>Контроль   две вкладки + один промпт
+           Context всегда ON  ← не переменная
+
+Лечение    Skill · Rule · RAG · ADR
+           включаем / выключаем по одному
+
+Зависимая  тело теста · команда · commit · слой
+
+Вывод      открытый канон кормит копипаст
+           happy → sad. Слои это запрещают.</pre>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Context всегда в кадре, не в паке как файл-слой</span>
+    <span>AGENTS.md / rules — это Rule, не Context</span>
+    <span>живой опыт · 6/6</span>
+  </footer>
+</article>
+</body>
+</html>

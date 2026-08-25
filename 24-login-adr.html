@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Login · без ADR / с ADR</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body>
+<article class="sheet" id="24-login-adr">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · пример: login / wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">24 · login · adr</div>
+    </div>
+  </header>
+
+  <h1 class="h1">ADR 009: 401 — не новый e2e</h1>
+  <p class="lead">Skill+RAG умеют <em>как</em> кликнуть. ADR фиксирует <strong>почему A, не B</strong>, иначе каждый чат снова закрывает JSON браузером.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">без ADR · «на всякий e2e»</p></div>
+        <div class="panel__body">
+          <pre>// ещё один браузерный тест «на 401»
+open("/login"); fill; submit;
+$("pre").shouldHave(text("401"));   // нет такого UI
+
+class Login401Tests { … }           // второй файл
+// AuthApiTests#loginWithInvalidPassword
+// уже лежит в репо — не открыли ADR</pre>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">с ADR 009 · развилка закрыта</p></div>
+        <div class="panel__body">
+          <pre>Контракт 401 JSON
+  AuthApiTests#loginWithInvalidPassword
+  @Layer("api")  ← RAG test-api-layer
+
+Текст ошибки на форме
+  LoginTests#shouldShowErrorWhenPasswordIsWrong
+  @Layer("e2e")  ← это UI-состояние, e2e ок
+
+Не $("pre") «401» — нет такого UI</pre>
+        </div>
+      </section>
+    </div>
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="dont"><b>Не ADR</b>«В этом тесте опечатка в тексте ошибки» — поправь константу. «Поставь JDK 21» — RAG/rule. Не писать ADR на каждый новый метод LoginTests.</div>
+      <div class="do"><b>Это ADR</b>401 не закрываем кликом, если нет UI-состояния. Факт селектора остаётся RAG, не копируется в ADR. Screenshot = slice — <em>другой</em> промпт, ADR 005, лист 04.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span><code>docs/adr/009-login-401-is-api.md</code> · чанк <code>adr-when</code></span>
+    <span>Канон api: <code>AuthApiTests#loginWithInvalidPassword</code></span>
+    <span>пример · adr</span>
+  </footer>
+</article>
+</body>
+</html>

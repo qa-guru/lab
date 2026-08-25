@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Handouts · Rule · Skill · RAG · ADR</title>
+  <link rel="stylesheet" href="css/handouts.css">
+</head>
+<body class="deck">
+<main class="gallery no-print" id="top">
+  <p class="brand__name">QA.GURU</p>
+  <h1>Rule · Skill · RAG · ADR</h1>
+  <p>Листы A4 курса AI-first QA. Кликни строку — лист ниже на этой же странице.</p>
+
+  <h2 class="sec">По одной на слой + общая</h2>
+  <a class="sheet-link" href="#00-overview"><b>00 · Общая карта</b><span>четыре вопроса · чайник = прогон e2e · quiz</span></a>
+  <a class="sheet-link" href="#01-skills"><b>01 · Skill</b><span>маршрутный лист · пак · глагол+объект</span></a>
+  <a class="sheet-link" href="#02-rules"><b>02 · Rule</b><span>ПДД · пять файлов takeaway</span></a>
+  <a class="sheet-link" href="#03-rag"><b>03 · RAG</b><span>2–4 карточки · диета · кофемашина</span></a>
+  <a class="sheet-link" href="#04-adr"><b>04 · ADR</b><span>почему A не B · 009 логин · 005 slice</span></a>
+  <h2 class="sec">Login · без слоя / со слоем</h2>
+  <a class="sheet-link" href="#20-login"><b>20 · login</b><span>один промпт · что уже в репо</span></a>
+  <a class="sheet-link" href="#21-login-skill"><b>21 · без skill / со skill</b><span>ChromeDriver vs qa-write-test</span></a>
+  <a class="sheet-link" href="#22-login-rule"><b>22 · без rule / с rule</b><span>full suite vs tags + -Denv</span></a>
+  <a class="sheet-link" href="#23-login-rag"><b>23 · без RAG / с RAG</b><span>$("input") vs data-testid</span></a>
+  <a class="sheet-link" href="#24-login-adr"><b>24 · без ADR / с ADR</b><span>e2e на 401 vs api</span></a>
+  <h2 class="sec">Login · живой опыт</h2>
+  <a class="sheet-link" href="#30-login-micro"><b>30 · микропроект</b><span>две вкладки · один промпт</span></a>
+  <a class="sheet-link" href="#31-login-full"><b>31 · полный стек</b><span>канон wrong password</span></a>
+  <a class="sheet-link" href="#32-login-minus-one"><b>32 · полный − 1</b><span>своя галлюцинация у слоя</span></a>
+  <a class="sheet-link" href="#33-login-pairs"><b>33 · пары</b><span>2 из 4 · дыры складываются</span></a>
+  <a class="sheet-link" href="#34-login-singles"><b>34 · одиночки / пусто</b><span>1 из 4 · учебный интернет</span></a>
+  <a class="sheet-link" href="#35-login-context"><b>35 · context ≠ слой</b><span>пятая опция · сцена, не скрипт</span></a>
+  <a class="sheet-link" href="36-login-lab.html"><b>36 · лаборатория</b><span>вкл/выкл слоёв · галлюцинация live</span></a>
+  <h2 class="sec">Наращивание</h2>
+  <a class="sheet-link" href="#10-stack-skills"><b>10 · skills</b><span>есть маршрут, нет тормозов</span></a>
+  <a class="sheet-link" href="#11-stack-skills-rules"><b>11 · skills + rules</b><span>занятие 2 · канон</span></a>
+  <a class="sheet-link" href="#12-stack-skills-rules-rag"><b>12 · skills + rules + rag</b><span>занятие 3</span></a>
+  <a class="sheet-link" href="#13-stack-skills-rules-rag-adr"><b>13 · полный стек</b><span>занятие 4</span></a>
+  <h2 class="sec">Домашка</h2>
+  <a class="sheet-link" href="#40-homework"><b>40 · ДЗ · main → develop</b><span>два промпта · блок сдачи</span></a>
+  <h2 class="sec">Словарь</h2>
+
+  <a class="sheet-link" href="50-glossary.html"><b>50 · словарь AI-стека</b><span>термин · общее · на LoginTests</span></a>
+
+  <p style="margin-top:24px"><a href="README.md">README.md</a> · пак: <a href="https://github.com/qa-guru/ai-first-student-workspace/blob/main/docs/agent-skills/PACK.md">PACK.md</a> · словарь: <a href="50-glossary.html">50-glossary.html</a></p>
+</main>
+
+<article class="sheet" id="00-overview">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · takeaway Java / Gradle / Selenide</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">00 · общая карта</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Четыре файла вместо одного промпта</h1>
+  <p class="lead">Промпт умирает вместе с чатом. <strong>Rule, skill, RAG и ADR лежат в git</strong> — следующий агент читает их, а не вашу память. Один файл на 500 строк — антипаттерн.</p>
+
+  <div class="body">
+    <div class="grid-4" style="display:grid;gap:8px">
+      <section class="card card--skill">
+        <div class="card__label"><span class="card__name">Skill</span><span class="card__q">Как сделать задачу?</span></div>
+        <p>Маршрутный лист: When → шаги → DoD.</p>
+        <p class="tiny muted"><code>docs/agent-skills/&lt;name&gt;/SKILL.md</code><br>Читают по промпту. 80–200 строк.</p>
+      </section>
+      <section class="card card--rule">
+        <div class="card__label"><span class="card__name">Rule</span><span class="card__q">Что нельзя всегда?</span></div>
+        <p>ПДД: лимиты и defaults на каждый чат.</p>
+        <p class="tiny muted"><code>.clinerules/</code> · <code>AGENTS.md</code><br>Авто (toggle). 10–80 строк.</p>
+      </section>
+      <section class="card card--rag">
+        <div class="card__label"><span class="card__name">RAG</span><span class="card__q">Откуда факт?</span></div>
+        <p>Карточка знания: команда, якорь, контракт.</p>
+        <p class="tiny muted"><code>docs/agent-skills/rag/&lt;id&gt;.md</code><br>2–4 файла на задачу. Один id = файл.</p>
+      </section>
+      <section class="card card--adr">
+        <div class="card__label"><span class="card__name">ADR</span><span class="card__q">Почему A, не B?</span></div>
+        <p>Решение, которое дорого откатывать.</p>
+        <p class="tiny muted"><code>docs/adr/NNN-*.md</code><br>Skill ссылается. ≤ ~40 строк.</p>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">простой мир · чайник</p></div>
+        <div class="panel__body">
+          <pre>Человек: «Сделай чай»
+        ↓
+Rule  → не включать пустой; не оставлять без присмотра
+Skill → вода до метки → кнопка → клик → чашка
+RAG   → на 4 этаже кнопка СЛЕВА; кипяток ≈ 100 °C
+ADR   → электрический, не самовар: скорость &gt; ритуал</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">прогон e2e slice</p></div>
+        <div class="panel__body">
+          <pre>Вы: «Прогони e2e»
+        ↓
+Rule  → tags e2e, не full suite; не commit; всегда -Denv
+Skill → qa-smoke-debug: app UP → Gradle → Allure → flaky
+RAG   → ci-gradle-args · cfg-stands · po-fluent
+ADR   → screenshot — slice, не @Layer  (005)</pre>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-21" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">мини-quiz · куда класть</p></div>
+        <div class="panel__body" style="padding-top:4px">
+          <table class="kv">
+            <thead><tr><th>Ситуация</th><th>Skill</th><th>Rule</th><th>RAG</th><th>ADR</th></tr></thead>
+            <tbody>
+              <tr><td>Не коммитить без OK</td><td></td><td><span class="mark mark--y">✓</span></td><td></td><td></td></tr>
+              <tr><td>Порядок: слой → PO → прогон</td><td><span class="mark mark--y">✓</span></td><td></td><td></td><td></td></tr>
+              <tr><td>Селекторы только в Page Object</td><td></td><td></td><td><span class="mark mark--y">✓</span></td><td></td></tr>
+              <tr><td>Screenshot не ярус пирамиды</td><td></td><td></td><td></td><td><span class="mark mark--y">✓</span></td></tr>
+              <tr><td>401 JSON не новый e2e-клик</td><td></td><td></td><td></td><td><span class="mark mark--y">✓</span></td></tr>
+              <tr><td>DoD после прогона</td><td><span class="mark mark--y">✓</span></td><td></td><td></td><td></td></tr>
+              <tr><td>E2e = <code>-DincludeTags=e2e</code></td><td></td><td><span class="mark mark--y">✓</span></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="card card--muted">
+        <h2 class="sec">Как агент это видит</h2>
+        <p>В IDE <strong>rule включается сам</strong>. Skill читают фразой «прочитай SKILL.md». RAG — 2–4 пути, которые назвал skill. ADR — цитата «почему так».</p>
+        <p class="tiny muted" style="margin-top:6px">Наращивание: skill → + rule → + RAG (занятие 3) → + ADR (занятие 4). Листы 10–13 — тот же сюжет с выключенными слоями. Живой login: 30–35 (Context — сцена, не слой). <strong>main</strong> — логин / items, без note. <strong>develop</strong> — заметка влита, ярусы takeaway 6/6.</p>
+      </section>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Пак: <code>docs/agent-skills/PACK.md</code></span>
+    <span>Rule 01: один task <code>test</code> + tags · <code>@Tag("smoke")</code> — prod slice (ADR 005)</span>
+    <span>занятия 2–4</span>
+  </footer>
+</article>
+<article class="sheet" id="01-skills">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · takeaway Java / Gradle / Selenide</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">01 · skill</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Skill — маршрутный лист на одну задачу</h1>
+  <p class="lead">Не энциклопедия и не ПДД. Skill отвечает: <strong>когда вызывать, какие шаги, когда считать готовым</strong>. Имя: <code>qa-&lt;глагол&gt;-&lt;объект&gt;</code>. Раннер CI и Sonar — не имя skill, а RAG.</p>
+
+  <div class="body">
+    <div class="grid-12" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">docs/agent-skills/qa-write-test/SKILL.md</p></div>
+        <div class="panel__body">
+          <div class="cols-2">
+            <div>
+              <h2 class="sec">Каркас</h2>
+              <ul>
+                <li><strong>When</strong> — триггеры («напиши e2e», «покрой API»)</li>
+                <li><strong>Do not</strong> — CSS в тесте, ChromeDriver (commit / URL — rule)</li>
+                <li><strong>Steps</strong> — слой → стенды → PO → прогон</li>
+                <li><strong>DoD</strong> — чеклист, не «ну вроде ок»</li>
+                <li><strong>RAG (2–4 id)</strong> — факты рядом, не внутри</li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="sec">Промпт</h2>
+              <p class="prompt">Rules ON. Прочитай docs/agent-skills/qa-write-test/SKILL.md
+и чанки po-locators, po-step, test-negative, cfg-stands.
+Добавь автотест на неуспешный логин с неправильным паролем.
+Укажи pipeline/stage/prod.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="card card--skill">
+        <h2 class="sec">Это skill</h2>
+        <ul>
+          <li>Один глагол, один объект</li>
+          <li>Живые команды takeaway</li>
+          <li>Один Cline task = один skill</li>
+        </ul>
+        <h2 class="sec" style="margin-top:8px">Не skill</h2>
+        <ul>
+          <li>GitHub vs Jenkins — чанки <code>ci-*</code></li>
+          <li>TMS / AllureId — <code>tms-meta</code></li>
+          <li>JaCoCo / Sonar — <code>quality-gates</code></li>
+          <li>Хост (DNS) ≠ стенд (<code>qa-run-stand</code>)</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">пак курса · тот же список на занятиях 2, 3 и 4</p></div>
+      <div class="panel__body">
+        <div class="cols-2">
+          <div>
+            <h2 class="sec">Занятие 2</h2>
+            <p class="pack">
+              <code>qa-smoke-debug</code> <code>qa-write-test</code> <code>qa-review-framework</code>
+              <code>qa-run-stand</code> <code>qa-homework-check</code>
+              <code>qa-coverage-audit</code> <code>qa-pyramid-plan</code> <code>qa-bootstrap-framework</code>
+            </p>
+            <h2 class="sec" style="margin-top:8px">Занятие 3</h2>
+            <p class="pack">
+              <code>qa-review-ci</code> <code>qa-create-ci</code> <code>qa-fix-ci</code>
+              <code>qa-run-ci</code> <code>qa-stop-ci</code> <code>qa-pull-takeaway</code>
+              <code>qa-setup-host</code> <span class="muted">опц.</span>
+            </p>
+          </div>
+          <div>
+            <h2 class="sec">Занятие 4 · пирамида</h2>
+            <p class="pack"><code>qa-coverage-audit</code> → <code>qa-pyramid-plan</code> → <code>qa-write-test</code></p>
+            <p class="tiny muted" style="margin-top:6px"><code>qa-make-full-pyramid</code> — ярус за ярусом уже влитой фичи, потом STOP. Не план и не «один автотест».</p>
+            <p class="tiny muted"><code>qa-run-ci</code> ≠ <code>qa-run-stand</code>: workflow/build vs Gradle на app.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="do"><b>Do</b>When · якорь в проекте · RAG id · DoD. После смены skill — новый task.</div>
+      <div class="dont"><b>Don't</b>Таблица HTTP-глаголов внутри generic skill (это RAG <code>crud-http</code>). Не «почини всё» одним skill.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Загрузка: «прочитай SKILL.md» — не авто</span>
+    <span>Живые: <code>docs/agent-skills/&lt;name&gt;/SKILL.md</code></span>
+    <span>занятие 2</span>
+  </footer>
+</article>
+<article class="sheet" id="02-rules">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · takeaway Java / Gradle / Selenide</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">02 · rule</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Rule — ПДД, которые всегда в силе</h1>
+  <p class="lead">Rule не учит «как пройти маршрут». Он говорит: <strong>этого не делать / вот default</strong>. Короткий, always-on, срабатывает в каждом новом task, если toggle включён.</p>
+
+  <div class="body">
+    <div class="grid-12" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">.clinerules/01-qa-java-gradle.md</p></div>
+        <div class="panel__body">
+          <pre>## E2e slice
+cd tests/java/tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+
+## Запреты
+- Не git commit без явной просьбы
+- Не удалять allure-results
+- Не ./gradlew test без -DincludeTags «на smoke»</pre>
+        </div>
+      </section>
+      <section class="card card--rule">
+        <h2 class="sec">Загрузка</h2>
+        <p><code>.clinerules/*.md</code> и <code>AGENTS.md</code> — авто, тумблер Rules в Cline.</p>
+        <p class="tiny muted" style="margin-top:6px">Сменили rule или skill → <strong>новый task</strong>. Старый чат старый контекст не подхватит.</p>
+        <h2 class="sec" style="margin-top:10px">Размер</h2>
+        <p>10–80 строк. Если появились шаги и DoD — это уже skill: вынесите.</p>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">пять rules takeaway</p></div>
+      <div class="panel__body" style="padding-top:4px">
+        <table class="kv">
+          <thead><tr><th>Файл</th><th>Лимит</th><th>Не путать с</th></tr></thead>
+          <tbody>
+            <tr><td><code>01-qa-java-gradle</code></td><td>e2e-команда, не full suite; нет task <code>testE2e</code></td><td>workflow Allure → skill <code>qa-smoke-debug</code></td></tr>
+            <tr><td><code>02-git-safety</code></td><td>нет commit / push / reset --hard без OK</td><td>«закоммить вот это» — явная просьба</td></tr>
+            <tr><td><code>03-env-and-stand</code></td><td>всегда <code>-Denv</code>; URL не в Java; pipeline / stage / prod</td><td>факты стендов → RAG <code>cfg-stands</code></td></tr>
+            <tr><td><code>04-one-task-one-layer</code></td><td>один task = один ярус</td><td>план дыр → skill <code>qa-pyramid-plan</code></td></tr>
+            <tr><td><code>05-homework-check</code></td><td>self-check: таблица + статус, без commit</td><td>рубрика → RAG <code>hw-check-*</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="do"><b>Do</b>Лимиты и канон-команда. <code>@Tag("smoke")</code> в rule — как предостережение: prod slice, не эта команда (ADR 005).</div>
+      <div class="dont"><b>Don't</b>Роман на 200 строк. Не класть в rule таблицу CRUD или список всех skills — агент утонет, 7b выдумает <code>testE2e</code>.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Чайник: «не включать пустой»</span>
+    <span>Cline: ⚖️ Rules → ON · после правки файла — New Task</span>
+    <span>занятие 2</span>
+  </footer>
+</article>
+<article class="sheet" id="03-rag">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · takeaway Java / Gradle / Selenide</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">03 · rag</div>
+    </div>
+  </header>
+
+  <h1 class="h1">RAG — факт, не маршрут</h1>
+  <p class="lead">Skill говорит <em>как идти</em>. RAG — <strong>карточка с полки</strong>: команда, селектор, стенд, контракт. Агент читает <strong>2–4 файла</strong>, которые назвал skill. Не всю папку, не monorepo из ~96 чанков.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">простой мир · библиотека</p></div>
+        <div class="panel__body">
+          <pre>Человек: «Доклад про чайник»
+        ↓
+Skill → тема → 2–4 карточки → черновик
+RAG   → кнопка слева · 100 °C · 4 этаж
+
+«Прочитай весь стеллаж» → 7b тонет
+и ставит $("input") в *Tests.</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">кофемашина · глагол ≠ инструкция</p></div>
+        <div class="panel__body">
+          <p class="tiny">Одна машина, разные <strong>действия</strong>. Не «skill DeLonghi» vs «skill Nespresso».</p>
+          <table class="kv">
+            <tbody>
+              <tr><td>Что умеет?</td><td><code>qa-review-ci</code></td></tr>
+              <tr><td>Поставь и включи</td><td><code>qa-create-ci</code></td></tr>
+              <tr><td>Течёт / красный</td><td><code>qa-fix-ci</code></td></tr>
+              <tr><td>Ещё чашку / стоп</td><td><code>qa-run-ci</code> / <code>qa-stop-ci</code></td></tr>
+              <tr><td>Кнопки, YAML, job</td><td>RAG <code>ci-github-actions</code> / <code>ci-jenkins</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">диета · docs/agent-skills/rag/&lt;id&gt;.md</p></div>
+      <div class="panel__body" style="padding-top:4px">
+        <table class="kv">
+          <thead><tr><th>Когда</th><th>id</th><th>Не это</th></tr></thead>
+          <tbody>
+            <tr><td>Какой ярус / slice</td><td><code>test-pyramid</code> · <code>test-layers</code></td><td>JaCoCo 100% ≠ пирамида 100%</td></tr>
+            <tr><td>Пишешь e2e</td><td><code>po-fluent</code> · <code>po-locators</code> · <code>po-step</code></td><td>Селектор в классе <code>*Tests</code></td></tr>
+            <tr><td>Стенд и URL</td><td><code>cfg-stands</code> · <code>cfg-env-profile</code> · <code>cfg-base-url</code></td><td>localhost в Java</td></tr>
+            <tr><td>Контракт HTTP</td><td><code>crud-http</code></td><td>Таблица глаголов в <code>qa-write-test</code></td></tr>
+            <tr><td>CI YAML / Gradle</td><td><code>ci-github-actions</code> · <code>ci-gradle-args</code></td><td>Имя skill <code>qa-*-github</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="do"><b>Do</b>Skill пишет: «прочитай <code>docs/agent-skills/rag/po-fluent.md</code>». Один чанк = один id = один файл.</div>
+      <div class="dont"><b>Don't</b>Кормить модель всей папкой «на всякий». SSOT паттернов преподавателя — <code>docs/rag/</code> monorepo; студенту — диета в паке.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Карта: <code>docs/agent-skills/rag/README.md</code></span>
+    <span>Занятие 2: явный путь · занятие 3: зачем 2–4, не вся папка</span>
+    <span>занятие 3</span>
+  </footer>
+</article>
+<article class="sheet" id="04-adr">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · takeaway Java / Gradle / Selenide</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">04 · adr</div>
+    </div>
+  </header>
+
+  <h1 class="h1">ADR — почему выбрали A, а не B</h1>
+  <p class="lead">Пишем, когда решение <strong>дорого откатывать</strong>: все этажи закупили один тип чайника. Не пишем: «сегодня Earl Grey» (это промпт) и «поставь JDK 21» (это RAG / rule).</p>
+
+  <div class="body">
+    <div class="grid-12" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">каркас · ≤ 40 строк · docs/adr/NNN-*.md</p></div>
+        <div class="panel__body">
+          <pre># ADR NNN: короткий заголовок-решение
+Статус: предложено | принято | отменено
+Контекст: какая развилка (A vs B).
+Решение: что выбрали (1–5 пунктов).
+Последствия: что теперь нельзя / что стало проще.
+RAG: id чанков, которые держат «как», не «почему».</pre>
+        </div>
+      </section>
+      <section class="card card--adr">
+        <h2 class="sec">Чайник</h2>
+        <p>Электрический, не самовар: скорость важнее ритуала. Без ADR стажёр каждый раз спорит «а давайте самовар».</p>
+        <h2 class="sec" style="margin-top:10px">Автотест на логин</h2>
+        <p>401 JSON — слой <code>api</code>, не новый e2e-клик. Это <strong>ADR 009</strong>. Факт селектора — RAG, не ADR.</p>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">005 · screenshot — slice, не слой</p></div>
+        <div class="panel__body">
+          <p>Хочется «ярус скриншотов». Пиксельный diff — тот же браузерный сценарий, другой <strong>отбор</strong>.</p>
+          <ul>
+            <li><code>*ScreenshotTests</code> остаются <code>@Layer("e2e")</code></li>
+            <li>Отбор: <code>@Tag("screenshot")</code> + job mock/stage</li>
+            <li><code>@Tag("smoke")</code> — тоже slice, не ярус</li>
+          </ul>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">006 · одна заметка, HTTP как RFC</p></div>
+        <div class="panel__body">
+          <p>Продукт: одна заметка на пользователя, <code>/api/note</code>. Глаголы — как в RFC, таблица статусов — RAG <code>crud-http</code>.</p>
+          <p class="tiny muted">Номер 006 — только пак takeaway. Не путать с monorepo ADR 006 (<code>allurerc</code>).</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="do"><b>Do</b>Ярус vs slice (005) · Rest Assured vs e2e на 401 (009) · DS header не форк (008). URL из properties — rule, не ADR.</div>
+      <div class="dont"><b>Don't</b>Дублировать skill внутри ADR. Не писать ADR на каждый новый тест. Не менять таблицу <code>@Layer</code> без ADR.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Чанк «когда»: <code>rag/adr-when.md</code> · stub: <code>_templates/adr-stub.md</code></span>
+    <span>Канон login: <code>docs/adr/009-login-401-is-api.md</code> · slice: <code>005-screenshot-not-layer.md</code></span>
+    <span>занятие 4</span>
+  </footer>
+</article>
+<article class="sheet" id="20-login">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · пример: login / wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">20 · login · сценарий</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Один промпт — четыре слоя</h1>
+  <p class="lead">Дальше четыре листа: <strong>что агент пишет без слоя и что — с ним</strong>. Сценарий один. В takeaway канон уже лежит, не выдумываем. Живой опыт с двумя вкладками и абляцией — листы <strong>30–35</strong>.</p>
+
+  <div class="body">
+    <p class="prompt">Добавь автотест на неуспешный логин с неправильным паролем</p>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">уже в репо · UI, текст ошибки</p></div>
+        <div class="panel__body">
+          <pre>tests/e2e/LoginTests.java
+  @Layer("e2e") @Tag("e2e") @Tag("negative")
+  shouldShowErrorWhenPasswordIsWrong()
+
+loginPage.openPage()
+        .typeUsername("user1")
+        .typePassword("wrongpassword")
+        .submitExpectingError()
+        .shouldHaveErrorMessage("Wrong login or password");</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">уже в репо · HTTP 401</p></div>
+        <div class="panel__body">
+          <pre>tests/api/AuthApiTests.java
+  @Layer("api") @Tag("api")
+  loginWithInvalidPassword()
+
+POST /api/auth/login
+body { user1, wrongpassword }
+→ 401 + schemas/error.json
+   message = "Wrong login or password"</pre>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">если дать промпт «с нуля» — куда ломается</p></div>
+      <div class="panel__body" style="padding-top:4px">
+        <table class="kv">
+          <thead><tr><th>Слой</th><th>Без него агент</th><th>С ним</th><th>Лист</th></tr></thead>
+          <tbody>
+            <tr><td>Skill</td><td>ChromeDriver, CSS в <code>*Tests</code>, нет DoD</td><td><code>qa-write-test</code>: слой → PO → <code>-Dtest=</code></td><td>21</td></tr>
+            <tr><td>Rule</td><td>full suite, <code>testE2e</code>, commit, <code>localhost</code></td><td>tags e2e, всегда <code>-Denv</code>, не commit</td><td>22</td></tr>
+            <tr><td>RAG</td><td>копирует happy path, <code>$("input")</code>, неверный текст</td><td><code>po-locators</code> · <code>po-step</code> · <code>test-negative</code> · <code>cfg-stands</code></td><td>23</td></tr>
+            <tr><td>ADR</td><td>второй e2e на JSON 401</td><td>контракт → api; форма → e2e</td><td>24</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <footer class="ft">
+    <span>PO: <code>pages/LoginPage.java</code> · <code>data-testid</code></span>
+    <span>Не дублировать существующий метод — skill так и говорит</span>
+    <span>пример · login</span>
+  </footer>
+</article>
+<article class="sheet" id="21-login-skill">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · пример: login / wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">21 · login · skill</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Skill: маршрутный лист vs «просто напиши тест»</h1>
+  <p class="lead">Промпт тот же. <strong>Без skill</strong> агент изобретает драйвер и селекторы. <strong>Со skill</strong> <code>qa-write-test</code> — слой, PO, один метод, изолированный прогон.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">без skill</p></div>
+        <div class="panel__body">
+          <pre>@Test
+void testWrongPassword() {
+  WebDriver d = new ChromeDriver();          // свой драйвер
+  d.findElement(By.cssSelector("input"))     // CSS в *Tests
+      .sendKeys("user1");
+  d.findElement(By.cssSelector("input[type=password]"))
+      .sendKeys("wrong");
+  d.findElement(By.cssSelector("button")).click();
+  assertEquals("error",
+      d.findElement(By.className("err")).getText());
+}
+
+./gradlew test          // нет -Dtest=Class#method</pre>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">со skill qa-write-test</p></div>
+        <div class="panel__body">
+          <pre>@Layer("e2e") @Epic("Authentication") @Feature("Login")
+class LoginTests extends TestBase {
+
+  @Test @Tag("e2e") @Tag("negative")
+  @DisplayName("Wrong password shows readable error")
+  void shouldShowErrorWhenPasswordIsWrong() {
+    loginPage.openPage()
+            .typeUsername("user1")
+            .typePassword("wrongpassword")
+            .submitExpectingError()
+            .shouldHaveErrorMessage(
+                "Wrong login or password");
+  }
+}
+
+cd tests/java/tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong
+// слой e2e · стенды ci/stage/prod · exit code</pre>
+        </div>
+      </section>
+    </div>
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="dont"><b>Без skill теряет</b>When / шаги / DoD. Нет запрета на CSS в тесте и на новый <code>ChromeDriver</code>. Нет ответа «какой слой, какие стенды». URL в Java и commit — лист 22.</div>
+      <div class="do"><b>Skill заставляет</b>Прочитать SKILL.md → один <code>@Layer</code> → расширить <code>LoginPage</code>, не класть локатор в тест → прогон <code>-Dtest=Class#method</code> → чеклист DoD.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Сценарий — промпт с листа 20. Skill включают фразой «прочитай SKILL.md»</span>
+    <span>Канон: <code>LoginTests#shouldShowErrorWhenPasswordIsWrong</code></span>
+    <span>пример · skill</span>
+  </footer>
+</article>
+<article class="sheet" id="22-login-rule">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · пример: login / wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">22 · login · rule</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Rule: ПДД, даже если skill уже прочитан</h1>
+  <p class="lead">Skill знает <em>как</em> написать метод. Rule не даёт <strong>выехать за лимиты</strong>: не весь suite, не localhost в Java, не commit без OK. Это always-on, не «ещё один абзац в skill».</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">skill есть, rules выключены</p></div>
+        <div class="panel__body">
+          <pre>// метод уже похож на канон…
+loginPage.openPage()
+        .typeUsername("user1")
+        .typePassword("wrongpassword")
+        .submitExpectingError();
+
+// но агент в том же чате:
+open("http://localhost:9821/login");   // 03-env
+./gradlew test                         // 01: без tags
+./gradlew testE2e                      // 01: нет такого task
+git add -A && git commit -m "login"    // 02-git-safety
+«ещё api заодно»          // 04-one-task</pre>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">Rules ON · пять файлов takeaway</p></div>
+        <div class="panel__body">
+          <pre>01  cd tests/java/tests-java-…-selenide
+    ./gradlew test -Denv=ci -DincludeTags=e2e \
+      -DexcludeTags=screenshot,mock
+    // нет task testE2e
+    // -Dtest=Class#method — skill qa-write-test
+
+02  не commit / push без явного OK
+
+03  URL только из properties; всегда -Denv=
+    open("/login") в PO, не localhost в тесте
+
+04  этот task = этот ярус
+
+05  homework-check — другой task</pre>
+        </div>
+      </section>
+    </div>
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="dont"><b>Без rule</b>Хороший PO не спасает: агент гоняет полчаса <code>test</code>, коммитит «чтобы не потерялось», зелёный только на localhost.</div>
+      <div class="do"><b>С rule</b>Канон-команда и запреты на каждый новый task. Workflow Allure/flaky по-прежнему в skill <code>qa-smoke-debug</code>, не в rule.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span><code>.clinerules/01-…05</code> · <code>AGENTS.md</code></span>
+    <span>После правки rule — New Task</span>
+    <span>пример · rule</span>
+  </footer>
+</article>
+<article class="sheet" id="23-login-rag">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · пример: login / wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">23 · login · rag</div>
+    </div>
+  </header>
+
+  <h1 class="h1">RAG: факты с полки, не догадки 7b</h1>
+  <p class="lead">Skill говорит «прочитай 2–4 чанка». <strong>Без RAG</strong> модель выдумывает <code>$("input")</code> и копирует happy path. <strong>С RAG</strong> — <code>data-testid</code>, <code>submitExpectingError</code>, текст ошибки, стенды.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">без чанков · «на глаз»</p></div>
+        <div class="panel__body">
+          <pre>// в LoginTests.java
+$("#login").setValue("user1");
+$("#pass").setValue("123");
+$(".btn-primary").click();
+$(".alert").shouldHave(text("Invalid"));
+
+// или с вкладки happy path:
+fillAndSubmitForm("user1", "wrongpassword")
+  .shouldHaveWelcomeMessage("…");  // ждёт HomePage
+
+@Step("Type password: {password}")
+@Step() на классе LoginPage</pre>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">skill назвал чанки · агент их прочитал</p></div>
+        <div class="panel__body">
+          <pre>po-locators   LoginPage:
+  $("[data-testid='login-input']")
+  $("[data-testid='error-message']")
+
+po-step       @Step на методах, не на классе
+              Type password  // не {password}
+
+test-negative typeUsername → typePassword
+              → submitExpectingError
+              «Wrong login or password»
+
+cfg-stands    URL из config; user1 есть на
+              pipeline / stage / prod
+              (wrong password сид не сносит)</pre>
+        </div>
+      </section>
+    </div>
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="dont"><b>Не RAG</b>Скармливать всю папку <code>rag/</code>. «Прочитай стеллаж» → 7b тонет. Task <code>testE2e</code> — это rule 01, не карточка факта.</div>
+      <div class="do"><b>2–4 id</b>Для этого промпта: <code>po-locators</code> · <code>po-step</code> · <code>test-negative</code> · <code>cfg-stands</code>. JSON 401 — ADR 009 (лист 24); факт api-кейса — <code>test-api-layer</code>, его читают после ADR.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Карта: <code>docs/agent-skills/rag/README.md</code></span>
+    <span>Канон селектора: <code>pages/LoginPage.java</code></span>
+    <span>пример · rag</span>
+  </footer>
+</article>
+<article class="sheet" id="24-login-adr">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · пример: login / wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">24 · login · adr</div>
+    </div>
+  </header>
+
+  <h1 class="h1">ADR 009: 401 — не новый e2e</h1>
+  <p class="lead">Skill+RAG умеют <em>как</em> кликнуть. ADR фиксирует <strong>почему A, не B</strong>, иначе каждый чат снова закрывает JSON браузером.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">без ADR · «на всякий e2e»</p></div>
+        <div class="panel__body">
+          <pre>// ещё один браузерный тест «на 401»
+open("/login"); fill; submit;
+$("pre").shouldHave(text("401"));   // нет такого UI
+
+class Login401Tests { … }           // второй файл
+// AuthApiTests#loginWithInvalidPassword
+// уже лежит в репо — не открыли ADR</pre>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">с ADR 009 · развилка закрыта</p></div>
+        <div class="panel__body">
+          <pre>Контракт 401 JSON
+  AuthApiTests#loginWithInvalidPassword
+  @Layer("api")  ← RAG test-api-layer
+
+Текст ошибки на форме
+  LoginTests#shouldShowErrorWhenPasswordIsWrong
+  @Layer("e2e")  ← это UI-состояние, e2e ок
+
+Не $("pre") «401» — нет такого UI</pre>
+        </div>
+      </section>
+    </div>
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="dont"><b>Не ADR</b>«В этом тесте опечатка в тексте ошибки» — поправь константу. «Поставь JDK 21» — RAG/rule. Не писать ADR на каждый новый метод LoginTests.</div>
+      <div class="do"><b>Это ADR</b>401 не закрываем кликом, если нет UI-состояния. Факт селектора остаётся RAG, не копируется в ADR. Screenshot = slice — <em>другой</em> промпт, ADR 005, лист 04.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span><code>docs/adr/009-login-401-is-api.md</code> · чанк <code>adr-when</code></span>
+    <span>Канон api: <code>AuthApiTests#loginWithInvalidPassword</code></span>
+    <span>пример · adr</span>
+  </footer>
+</article>
+<article class="sheet" id="30-login-micro">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">30 · микропроект</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Две вкладки и один промпт</h1>
+  <p class="lead">Сцена занятия: открыты <strong>LoginTests</strong> (успешный логин) и <strong>LoginPage</strong>. <strong>HomePage</strong> (Welcome), TestBase и Gradle — не третья вкладка, агент их «видит» сам. Это <strong>project context</strong>, не слой. Слои включаем со следующего листа.</p>
+
+  <div class="body">
+    <p class="prompt">Добавь автотест на неуспешный логин с неправильным паролем</p>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">вкладка 1 · LoginTests.java</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">@Layer("e2e") @Epic("Authentication") @Feature("Login")
+class LoginTests extends TestBase {
+
+  @Test @Tag("e2e") @Tag("smoke") @Tag("positive")
+  @DisplayName("User is logged in with valid credentials")
+  void shouldLoginWithValidCredentials() {
+    loginPage.openPage()
+            .fillAndSubmitForm("user1", "password1")
+            .shouldHaveWelcomeMessage("Welcome, user1!");
+  }
+}</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">вкладка 2 · LoginPage.java</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">loginInput    = $("[data-testid='login-input']");
+passwordInput = $("[data-testid='password-input']");
+submitButton  = $("[data-testid='submit-button']");
+
+LoginPage openPage()
+HomePage  fillAndSubmitForm(String username, String password)  // только happy path
+LoginPage typeUsername(String username)
+LoginPage typePassword(String password)</pre>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">условно · HomePage.java</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">welcomeMessage = $("[data-testid='welcome-message']");
+
+HomePage shouldHaveWelcomeMessage(String message)
+  // fillAndSubmitForm возвращает сюда</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">условно · TestBase.java</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">protected LoginPage loginPage = new LoginPage();
+Configuration.baseUrl = ConfigReader.resolveWebBaseUrl();
+// chrome / remote — из config
+// не new ChromeDriver() в тесте
+
+test { includeTags из -DincludeTags; -Denv= }
+// task testE2e — нет
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -Dtest=LoginTests#&lt;method&gt;</pre>
+        </div>
+      </section>
+    </div>
+
+    <div class="dont"><b>Перед live</b>Закомментируй <code>shouldShowErrorWhenPasswordIsWrong</code> — в takeaway метод уже лежит. Иначе skill честно скажет «не дублируй». Промпт на 31–35 <strong>тот же</strong> (жёлтая плашка только здесь). «Не коммить» в чат не писать — это Rule.</div>
+  </div>
+
+  <footer class="ft">
+    <span>Context всегда включён · не слой</span>
+    <span>Канон happy path: <code>LoginTests#shouldLoginWithValidCredentials</code></span>
+    <span>живой опыт · 1/6</span>
+  </footer>
+</article>
+<article class="sheet" id="31-login-full">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">31 · полный стек</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Правильный ответ: слои не дают скопировать happy path</h1>
+  <p class="lead">Те же две вкладки, тот же промпт. <strong>Context даёт образец</strong>. Skill / rule / RAG / ADR не дают взять <code>fillAndSubmitForm</code> на sad path, выдумать task и закрыть 401 кликом.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">канон · LoginTests</p></div>
+        <div class="panel__body">
+          <pre>@Test @Tag("e2e") @Tag("negative")
+@DisplayName("Wrong password shows readable error")
+void shouldShowErrorWhenPasswordIsWrong() {
+  loginPage.openPage()
+          .typeUsername("user1")
+          .typePassword("wrongpassword")
+          .submitExpectingError()
+          .shouldHaveErrorMessage(
+              "Wrong login or password");
+}
+
+// не @Tag("smoke") — это не prod slice
+// не fillAndSubmitForm — тот ждёт HomePage</pre>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">прогон · ответ агента</p></div>
+        <div class="panel__body">
+          <pre>cd tests/java/tests-java-gradle-junit5-allure3-selenide
+./gradlew test -Denv=ci -DincludeTags=e2e \
+  -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong
+
+слой     e2e  (текст на форме)
+стенды   pipeline / stage / prod
+         user1 есть; сид не сносим
+401 JSON уже в AuthApiTests — не трогаем
+exit code 0 · нет commit</pre>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-4" style="display:grid;gap:8px">
+      <section class="card card--skill">
+        <div class="card__label"><span class="card__name">Skill</span><span class="card__q">как</span></div>
+        <p>Один <code>@Layer</code> → PO → <code>-Dtest=</code> → DoD.</p>
+      </section>
+      <section class="card card--rule">
+        <div class="card__label"><span class="card__name">Rule</span><span class="card__q">нельзя</span></div>
+        <p>Не suite, не commit, всегда <code>-Denv</code>, один ярус.</p>
+      </section>
+      <section class="card card--rag">
+        <div class="card__label"><span class="card__name">RAG</span><span class="card__q">факт</span></div>
+        <p><code>po-locators</code> · <code>po-step</code> · <code>test-negative</code> · <code>cfg-stands</code>.</p>
+      </section>
+      <section class="card card--adr">
+        <div class="card__label"><span class="card__name">ADR</span><span class="card__q">почему</span></div>
+        <p>UI = e2e · 401 = api.</p>
+      </section>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Промпт с листа 30 · SKILL.md в чат не копировать — слои сами</span>
+    <span>живой опыт · 2/6</span>
+  </footer>
+</article>
+<article class="sheet" id="32-login-minus-one">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">32 · полный − 1</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Убрали один слой — сломалось своё</h1>
+  <p class="lead">Вкладки те же. Стек почти полный. <strong>Каждый слой закрывает свою галлюцинацию</strong> — остальные три её не дублируют.</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">− Skill · нет When / DoD</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">Метод может получиться (ctx + RAG).
+Ломается маршрут:
+  новый LoginSadPathTests.java     // не расширил LoginTests
+  ./gradlew test -DincludeTags=e2e // весь срез, не -Dtest=
+  нет ответа «слой / стенды / exit»</pre>
+        </div>
+      </section>
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">− Rule · нет ПДД на каждый чат</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">Тело уже канон. В том же чате:
+  ./gradlew test     // full suite
+  ./gradlew testE2e  // такого task нет
+  git commit         // без OK
+  localhost · «ещё api заодно»</pre>
+        </div>
+      </section>
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">− RAG · факты с вкладки happy path</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">// скопировал вкладку 1 на sad path
+loginPage.openPage()
+        .fillAndSubmitForm("user1", "wrongpassword")
+        .shouldHaveWelcomeMessage("…"); // ждёт HomePage
+
+$("#password").setValue("123");    // или выдумал селектор
+$(".alert").shouldHave(text("Invalid credentials"));
+@Step("Type password: {password}")
+@Step() на классе LoginPage</pre>
+        </div>
+      </section>
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">− ADR · спор снова открыт</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">UI-ошибка ок. Плюс:
+  $("pre") «401»          // нет такого UI
+  class Login401Tests     // второй e2e
+  «на всякий e2e на JSON»</pre>
+        </div>
+      </section>
+    </div>
+    <div class="do"><b>Читать таблицу</b>−RAG на этом промпте самый зрелищный: агент честно смотрит на открытый happy path и применяет его к неверному паролю. Context не лечит, он <em>кормит</em> эту ошибку.</div>
+  </div>
+
+  <footer class="ft">
+    <span>Live: New Agent после каждого выключения слоя</span>
+    <span>A/B одного слоя без стека — листы 21–24</span>
+    <span>живой опыт · 3/6</span>
+  </footer>
+</article>
+<article class="sheet" id="33-login-pairs">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">33 · пары · 2 из 4</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Осталось два слоя: дыры складываются</h1>
+  <p class="lead">C(4,2) = 6. Не все live — таблица на экран. Context по-прежнему открыт. Промпт тот же.</p>
+
+  <div class="body">
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">что ещё умеет · чего уже нет</p></div>
+      <div class="panel__body" style="padding-top:4px">
+        <table class="kv kv--dense">
+          <thead>
+            <tr><th>Осталось</th><th>Выключили</th><th>Ещё держит</th><th>Типичная галлюцинация</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Skill+Rule</td>
+              <td>RAG ADR</td>
+              <td class="keep">слой → PO → не commit, tags+env</td>
+              <td class="hall">fillAndSubmitForm(wrong) · «Invalid» · e2e на 401</td>
+            </tr>
+            <tr>
+              <td>Skill+RAG</td>
+              <td>Rule ADR</td>
+              <td class="keep">fluent error-path, data-testid, DoD</td>
+              <td class="hall">./gradlew test · testE2e · git commit · «ещё 401 кликом»</td>
+            </tr>
+            <tr>
+              <td>Skill+ADR</td>
+              <td>Rule RAG</td>
+              <td class="keep">401 → api</td>
+              <td class="hall">$("input") · localhost · commit · testE2e</td>
+            </tr>
+            <tr>
+              <td>Rule+RAG</td>
+              <td>Skill ADR</td>
+              <td class="keep">команда канона, селекторы, текст ошибки</td>
+              <td class="hall">новый класс вместо LoginTests · нет DoD · e2e на 401</td>
+            </tr>
+            <tr>
+              <td>Rule+ADR</td>
+              <td>Skill RAG</td>
+              <td class="keep">не commit · 401 не кликом</td>
+              <td class="hall">ChromeDriver · fillAndSubmitForm · «Invalid credentials»</td>
+            </tr>
+            <tr>
+              <td>RAG+ADR</td>
+              <td>Skill Rule</td>
+              <td class="keep">error-path PO · 401 = AuthApiTests</td>
+              <td class="hall">full suite · git commit · нет -Dtest= · нет слоя в ответе</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="dont"><b>Пара ≠ половина стека</b>Skill+Rule без RAG на этом промпте выглядит «почти канон», пока не нажмёшь Submit: happy-path API на форме ошибки. Зелёный на ревью кода, красный на прогоне.</div>
+      <div class="do"><b>На занятии</b>Live достаточно <strong>Skill+Rule</strong> и <strong>Skill+RAG</strong> — две разные дыры (факт vs ПДД). Остальные четыре — с листа, не шесть New Agent.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Наращивание skill→rule→rag→adr — листы 10–13, другой сюжет</span>
+    <span>живой опыт · 4/6</span>
+  </footer>
+</article>
+<article class="sheet" id="34-login-singles">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">34 · 1 из 4 · пусто</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Один слой не тянет. Ноль — учебный интернет</h1>
+  <p class="lead">Один файл отвечает на один вопрос. Остальные три дыры открыты. <strong>Ничего</strong> (кроме вкладок) — то, что студент получит в чужом репо без пака.</p>
+
+  <div class="body">
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">четыре одиночки</p></div>
+      <div class="panel__body" style="padding-top:4px">
+        <table class="kv kv--dense">
+          <thead>
+            <tr><th>Только</th><th>Вопрос, на который отвечает</th><th>Всё равно</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Skill</td>
+              <td class="keep">порядок: слой → PO → прогон → DoD</td>
+              <td class="hall">выдуманный селектор / текст · commit · e2e на 401</td>
+            </tr>
+            <tr>
+              <td>Rule</td>
+              <td class="keep">не suite, не commit, всегда -Denv</td>
+              <td class="hall">new ChromeDriver() · $("input") · «Invalid» · e2e на 401</td>
+            </tr>
+            <tr>
+              <td>RAG</td>
+              <td class="keep">data-testid, submitExpectingError, точный текст</td>
+              <td class="hall">full suite · commit · нет DoD · второй тест на 401</td>
+            </tr>
+            <tr>
+              <td>ADR</td>
+              <td class="keep">401 ≠ новый клик</td>
+              <td class="hall">ChromeDriver · localhost · testE2e · CSS в *Tests</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">0 слоёв · вкладки открыты</p></div>
+        <div class="panel__body">
+          <pre class="pre--sm">как лист 21 слева, плюс учебный интернет:
+  ChromeDriver · localhost:9821 · CSS input
+  assertEquals("Invalid credentials", …)
+./gradlew test
+git commit -am "add login test"</pre>
+        </div>
+      </section>
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+        <div class="dont"><b>Почему так, если канон на вкладке</b>Модель дописывает «как обычно в интернете»: Selenium 3, localhost, полный suite, сама коммитит. Открытый Selenide-тест — намёк, не запрет.</div>
+        <div class="do"><b>Live на зачёте</b>Один прогон «полного стека» и один прогон «ничего». Пары и одиночки — с листа, иначе занятие съест New Agent.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Колонка «0 слоёв» = лист 35: это всё ещё Context</span>
+    <span>живой опыт · 5/6</span>
+  </footer>
+</article>
+<article class="sheet" id="35-login-context">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · живой опыт: wrong password</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--ctx chip--on">Context</span>
+        <span class="chip chip--skill">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">35 · context ≠ слой</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Пятая опция: сцена, не скрипт</h1>
+  <p class="lead">Project context — <strong>открытые вкладки, индекс репо, TestBase, build.gradle</strong>. Его включают всегда (лист 30). Это не пятый слой: он не отвечает ни на «как», ни на «нельзя», ни на «факт», ни на «почему».</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="card card--ctx">
+        <div class="card__label"><span class="card__name">Что такое Context</span><span class="card__q">сцена</span></div>
+        <ul>
+          <li>Вкладки: <code>LoginTests</code>, <code>LoginPage</code></li>
+          <li>Недавно открытый <code>TestBase</code></li>
+          <li>Поиск по репо / @codebase</li>
+          <li>Сигнатуры Gradle, если агент дошёл</li>
+        </ul>
+        <p class="tiny muted">Примеры «как уже сделано». Нет When, нет запрета, нет точного текста ошибки, нет развилки 401.</p>
+      </section>
+      <section class="card card--muted">
+        <div class="card__label"><span class="card__name">Чего Context не делает</span><span class="card__q">не слой</span></div>
+        <ul>
+          <li>Не skill — не заставляет выбрать один <code>@Layer</code> и DoD</li>
+          <li>Не rule — не держит «не commit» на следующем ходе</li>
+          <li>Не RAG — happy path на вкладке ≠ error path</li>
+          <li>Не ADR — не помнит, почему 401 не кликают</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--bad">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">только Context · самая тихая галлюцинация</p></div>
+        <div class="panel__body">
+          <pre>// выглядит как канон — скопировал вкладку 1
+loginPage.openPage()
+        .fillAndSubmitForm("user1", "wrongpassword")
+        .shouldHaveWelcomeMessage("Welcome, user1!");
+
+// или «чуть поправил» assert, но всё ещё HomePage
+        .shouldHaveErrorMessage("Wrong password");
+
+./gradlew test          // или testE2e
+git commit -am "login"</pre>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">эксперимент на занятии</p></div>
+        <div class="panel__body">
+          <pre>Контроль   две вкладки + один промпт
+           Context всегда ON  ← не переменная
+
+Лечение    Skill · Rule · RAG · ADR
+           включаем / выключаем по одному
+
+Зависимая  тело теста · команда · commit · слой
+
+Вывод      открытый канон кормит копипаст
+           happy → sad. Слои это запрещают.</pre>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Context всегда в кадре, не в паке как файл-слой</span>
+    <span>AGENTS.md / rules — это Rule, не Context</span>
+    <span>живой опыт · 6/6</span>
+  </footer>
+</article>
+<article class="sheet" id="10-stack-skills">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · наращивание слоёв</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">10 · skills</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Только skill: есть маршрут, нет тормозов</h1>
+  <p class="lead">Агент знает <strong>порядок шагов и DoD</strong>. Не знает, чего нельзя. Без rule он может включить пустой чайник, запустить full suite и закоммитить «чтобы не потерялось».</p>
+
+  <div class="body grid-rail" style="display:grid;gap:10px">
+    <aside>
+      <ol class="tower">
+        <li class="tower__item tower__item--skill is-on"><b>Skill</b> шаги + DoD</li>
+        <li class="tower__item tower__item--rule">Rule · лимиты</li>
+        <li class="tower__item tower__item--rag">RAG · факты</li>
+        <li class="tower__item tower__item--adr">ADR · почему</li>
+      </ol>
+      <p class="stack-note" style="margin-top:8px">Снизу вверх — как наращиваем на курсе. В IDE rule потом включится сам.</p>
+    </aside>
+    <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+      <div class="grid-2" style="display:grid;gap:8px">
+        <section class="panel">
+          <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">чайник</p></div>
+          <div class="panel__body">
+            <pre>Skill → 1) вода  2) кнопка  3) клик  4) чашка
+DoD   → чай в чашке
+
+Ломается:
+  · чайник пустой (нет rule)
+  · кнопка справа — другая кухня (нет RAG)
+  · «а давайте самовар» (нет ADR)</pre>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">прогон e2e slice · qa-smoke-debug</p></div>
+          <div class="panel__body">
+            <pre>1. App UP (:8800 / UI :9821)
+2. Gradle slice → exit code
+3. Allure results
+4. Flaky → -Dtest=Class#method × 3
+
+Ломается:
+  · ./gradlew test без tags
+  · git commit «для истории»
+  · URL localhost в новом тесте</pre>
+          </div>
+        </section>
+      </div>
+      <p class="prompt">Прочитай docs/agent-skills/qa-smoke-debug/SKILL.md.
+E2e slice. (Rules выключены — так не оставляем на зачёте.)</p>
+      <div class="dont"><b>Зачем следующий слой</b>Skill без rule — хороший чеклист в мире без запретов. На курсе сразу включаем Rules ON. Следующий лист: + ПДД.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Слой 1 из 4</span>
+    <span>Skill один не заменяет rule / RAG / ADR</span>
+    <span>занятие 2 · старт</span>
+  </footer>
+</article>
+<article class="sheet" id="11-stack-skills-rules">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · наращивание слоёв</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">11 · skills + rules</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Skill + rule: маршрут внутри ПДД</h1>
+  <p class="lead">Rule — <strong>фон каждого чата</strong>. Skill — по запросу. Вместе: агент идёт по шагам, но не выезжает на полный suite и не коммитит сам. Это канон занятия 2.</p>
+
+  <div class="body grid-rail" style="display:grid;gap:10px">
+    <aside>
+      <ol class="tower">
+        <li class="tower__item tower__item--skill is-on"><b>Skill</b> шаги + DoD</li>
+        <li class="tower__item tower__item--rule is-on"><b>Rule</b> лимиты</li>
+        <li class="tower__item tower__item--rag">RAG · факты</li>
+        <li class="tower__item tower__item--adr">ADR · почему</li>
+      </ol>
+      <p class="stack-note" style="margin-top:8px">Rule не дублирует skill: в rule — команда-default и запреты, в skill — Allure, flaky, DoD.</p>
+    </aside>
+    <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">как они стыкуются</p></div>
+        <div class="panel__body">
+          <pre>RULES (фон, toggle ON)
+  e2e = includeTags=e2e + env ci
+  не коммить · не трогать allure-results · один task = один ярус
+        ↓ ограничивают
+SKILL (по запросу)
+  1. App UP (:8800 / UI :9821)
+  2. Gradle slice → exit code
+  3. Allure results
+  4. Flaky → -Dtest=Class#method × 3</pre>
+        </div>
+      </section>
+      <div class="grid-2" style="display:grid;gap:8px">
+        <div class="do"><b>Чайник</b>Не включать пустой. Вода → кнопка → чашка. Ещё не знаем, что кнопка слева на 4 этаже.</div>
+        <div class="do"><b>Прогон e2e</b>Команда канона из rule. Workflow из <code>qa-smoke-debug</code>. Ещё нет чанков PO и стендов — их допишет занятие 3.</div>
+      </div>
+      <p class="prompt">Rules включены. Прочитай docs/agent-skills/qa-smoke-debug/SKILL.md.
+E2e slice. Не коммить.</p>
+      <p class="tiny muted">Ожидание:</p>
+      <p class="prompt">./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock</p>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Слой 2 из 4 · занятие 2</span>
+    <span>После смены файлов — New Task</span>
+    <span>ещё нет RAG</span>
+  </footer>
+</article>
+<article class="sheet" id="12-stack-skills-rules-rag">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · наращивание слоёв</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr">ADR</span>
+      </div>
+      <div class="hd__id">12 · skills + rules + rag</div>
+    </div>
+  </header>
+
+  <h1 class="h1">+ RAG: 2–4 карточки, не весь стеллаж</h1>
+  <p class="lead">Теперь skill <strong>называет факты</strong>. Агент не угадывает селектор и не путает pipeline с prod. Занятие 3: какие чанки брать; CI = та же пирамида.</p>
+
+  <div class="body grid-rail" style="display:grid;gap:10px">
+    <aside>
+      <ol class="tower">
+        <li class="tower__item tower__item--skill is-on"><b>Skill</b> шаги + DoD</li>
+        <li class="tower__item tower__item--rule is-on"><b>Rule</b> лимиты</li>
+        <li class="tower__item tower__item--rag is-on"><b>RAG</b> факты</li>
+        <li class="tower__item tower__item--adr">ADR · почему</li>
+      </ol>
+      <p class="stack-note" style="margin-top:8px">Глагол — в skill. Кнопки машины / YAML / стенды — в RAG.</p>
+    </aside>
+    <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+      <section class="panel">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">цепочка</p></div>
+        <div class="panel__body">
+          <pre>RULES (фон)
+  e2e tags · не коммить · всегда -Denv
+        ↓
+SKILL qa-write-test
+  слой → стенды → PO/клиент → -Dtest=…
+        ↓ факты (2–4 файла)
+RAG   po-locators · po-step · test-negative · cfg-stands</pre>
+        </div>
+      </section>
+      <div class="grid-2" style="display:grid;gap:8px">
+        <section class="card card--rag">
+          <div class="card__label"><span class="card__name">Чайник</span></div>
+          <p>Кнопка <strong>слева</strong> на 4 этаже. Кипяток ≈ 100 °C. Без RAG приносят чайник с другой кухни.</p>
+        </section>
+        <section class="card card--rag">
+          <div class="card__label"><span class="card__name">e2e логина</span></div>
+          <p>Селекторы в PO, не в <code>*Tests</code>. Тест едет на pipeline / stage / prod — URL из properties. CI: глагол в skill, раннер в <code>ci-github-actions</code> / <code>ci-jenkins</code>.</p>
+        </section>
+      </div>
+      <p class="prompt">Rules ON. Прочитай docs/agent-skills/qa-review-ci/SKILL.md
+и чанки ci-github-actions, test-pyramid, ci-gradle-args.
+Код не меняй. Не коммить.</p>
+      <div class="dont"><b>Ещё нет ADR</b>Агент знает <em>как</em> закрыть 401, но может снова предложить e2e «на всякий». «Почему api, не браузер» — следующий лист.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Слой 3 из 4 · занятие 3</span>
+    <span>Диета: <code>docs/agent-skills/rag/</code> · не <code>docs/rag/</code> monorepo</span>
+    <span>ещё нет ADR</span>
+  </footer>
+</article>
+<article class="sheet" id="13-stack-skills-rules-rag-adr">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · наращивание слоёв</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">13 · skills + rules + rag + adr</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Полный стек: как, нельзя, откуда, почему</h1>
+  <p class="lead">ADR закрывает спор, который иначе вспыхивает в каждом чате. Занятие 4: <strong>пишем ADR</strong> и закрываем пирамиду без «e2e на всё».</p>
+
+  <div class="body grid-rail" style="display:grid;gap:10px">
+    <aside>
+      <ol class="tower">
+        <li class="tower__item tower__item--skill is-on"><b>Skill</b> шаги + DoD</li>
+        <li class="tower__item tower__item--rule is-on"><b>Rule</b> лимиты</li>
+        <li class="tower__item tower__item--rag is-on"><b>RAG</b> факты</li>
+        <li class="tower__item tower__item--adr is-on"><b>ADR</b> почему</li>
+      </ol>
+      <p class="stack-note" style="margin-top:8px">Четыре вопроса — четыре файла. Не склеивать в один.</p>
+    </aside>
+    <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+      <div class="flow">
+        <div class="flow__node" style="--accent:var(--layer-skill)"><b>Skill</b>qa-coverage-audit → pyramid-plan → write-test</div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__node" style="--accent:var(--layer-rule)"><b>Rule</b>один task = один ярус · не commit</div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__node" style="--accent:var(--layer-rag)"><b>RAG</b>test-pyramid · test-layers · crud-http</div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__node" style="--accent:var(--layer-adr)"><b>ADR</b>009 401≠клик · 005 slice · 006 заметка</div>
+      </div>
+      <div class="grid-2" style="display:grid;gap:8px">
+        <section class="panel">
+          <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">чайник · полный ответ</p></div>
+          <div class="panel__body">
+            <pre>Rule  не пустой, не без присмотра
+Skill вода → кнопка → клик → чашка
+RAG   кнопка слева, 4 этаж, ~100 °C
+ADR   электрический, не самовар</pre>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">wrong password · полный ответ</p></div>
+          <div class="panel__body">
+            <pre>Rule  не full suite; URL не в Java
+Skill qa-write-test: слой → PO → -Dtest
+RAG   po-locators · po-step · test-negative · cfg-stands
+ADR   009: 401 JSON — api, не новый e2e-клик</pre>
+          </div>
+        </section>
+      </div>
+      <p class="prompt">Rules ON. Прочитай docs/agent-skills/qa-coverage-audit/SKILL.md
+и rag/test-pyramid.md. Таблица сценариев × ярусы + 3 дыры.
+Код не меняй. Не коммить.</p>
+      <p class="tiny muted">Ожидание: таблица, не 15 новых e2e. Дальше — отдельный task <code>qa-pyramid-plan</code>. Закрыть 401 новым e2e = нарушение ADR 009.</p>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Слой 4 из 4 · занятие 4</span>
+    <span>Общая карта: лист 00 · анатомия слоёв: 01–04</span>
+    <span>полный стек</span>
+  </footer>
+</article>
+<article class="sheet" id="40-homework">
+  <header class="hd">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true"><g stroke="#e8e4df" stroke-width="5"><path stroke-linecap="round" d="M 19.34 29.08 A 13.5 13.5 0 1 1 26.03 25.03"/><path stroke-linecap="round" d="M26.05 26.05 L29.65 29.65"/></g><g stroke="#61b6fb" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10.3 11.3 L14.2 15.5 L10.3 19.3"/><path d="M19 19.3 H22"/></g></svg>
+      <div>
+        <div class="brand__name">QA.GURU</div>
+        <div class="brand__kicker">AI-first QA · два промпта · сдача одним блоком</div>
+      </div>
+    </div>
+    <div class="hd__meta">
+      <div class="chips">
+        <span class="chip chip--skill chip--on">Skill</span>
+        <span class="chip chip--rule chip--on">Rule</span>
+        <span class="chip chip--rag chip--on">RAG</span>
+        <span class="chip chip--adr chip--on">ADR</span>
+      </div>
+      <div class="hd__id">40 · ДЗ · main → develop</div>
+    </div>
+  </header>
+
+  <h1 class="h1">Два промпта: стенд, потом план — не тесты</h1>
+  <p class="lead"><code>main</code> — логин / items, без note. <code>develop</code> — заметка влита, ярусы takeaway на upstream <strong>6/6</strong>. Промпты: <code>HOMEWORK.md</code>. В чат курса — только блок «Сдача ДЗ».</p>
+
+  <div class="body">
+    <div class="grid-2" style="display:grid;gap:8px">
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">ДЗ-1 · main · живой стенд</p></div>
+        <div class="panel__body">
+          <p class="tiny muted">Форк (не clone qa-guru) → <code>git checkout main</code> → compose → e2e. Note не писать.</p>
+          <p class="prompt">Skill qa-smoke-debug
+RAG ci-gradle-args · cfg-stands · allure-attach
+Не всю папку rag/. Не prod. Не commit.</p>
+          <h2 class="sec">Сдача ДЗ (в чат курса)</h2>
+          <table class="kv kv--dense">
+            <tbody>
+              <tr><td>Форк / origin</td><td>свой репо, не qa-guru</td></tr>
+              <tr><td>Ветка</td><td><code>main</code></td></tr>
+              <tr><td>Health</td><td><code>curl -sf :8800/api/health</code> → 2xx</td></tr>
+              <tr><td>UI</td><td><code>http://localhost:9821/</code> (не :9811)</td></tr>
+              <tr><td>Команда</td><td><code>-Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock</code></td></tr>
+              <tr><td>Прогон</td><td>exit 0, failed 0, <code>allure-results</code> не пустой</td></tr>
+              <tr><td>Статус</td><td>сдано / не сдано</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel panel--good">
+        <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">ДЗ-2 · develop · note + план</p></div>
+        <div class="panel__body">
+          <p class="tiny muted">После ДЗ-1, новый чат. Checkout <code>develop</code> → rebuild. Фичу и тесты note не писать (существующие не трогать). План = inventory; если 6/6 — дыр нет.</p>
+          <p class="prompt">Skills qa-coverage-audit · qa-pyramid-plan
+ADR 006 · RAG test-pyramid · crud-http · cfg-stands
+qa-make-full-pyramid — только после «следующий ярус».</p>
+          <h2 class="sec">Сдача ДЗ (в чат курса)</h2>
+          <table class="kv kv--dense">
+            <tbody>
+              <tr><td>Ветка</td><td><code>develop</code>, не merge в main</td></tr>
+              <tr><td>Фича жива</td><td>GET <code>/api/note</code> без токена → <strong>401</strong> (не 404)</td></tr>
+              <tr><td>Код</td><td><code>NoteController</code> + <code>note-panel</code> — да</td></tr>
+              <tr><td>Покрытие</td><td>takeaway note: факт из дерева (upstream <strong>6/6</strong>)</td></tr>
+              <tr><td>План</td><td>таблица сценарий × ярус; не копировать отчёт слепо</td></tr>
+              <tr><td>Дыры</td><td>нет, если 6/6; иначе ярус + якорь + стенды</td></tr>
+              <tr><td>Следующий</td><td>n/a если 6/6 · тесты в этом ДЗ не писались</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">канон плана · иначе незачёт</p></div>
+      <div class="panel__body" style="padding-top:4px">
+        <table class="kv kv--dense">
+          <thead><tr><th>Так</th><th>Не так</th></tr></thead>
+          <tbody>
+            <tr><td>Синглтон <code>/api/note</code>: PUT 201/200, PATCH только api, один e2e happy-path</td><td>POST+409 «already exists»; e2e на все глаголы</td></tr>
+            <tr><td>Slice <code>smoke</code> / <code>screenshot</code> / <code>mock</code> — не колонка яруса (ADR 005)</td><td><code>@Layer("screenshot")</code>, <code>@Layer("smoke")</code></td></tr>
+            <tr><td>Delete на prod — фабрика+teardown (ADR 006), не сид <code>user1</code></td><td><code>if (prod)</code> в тесте; снести витрину</td></tr>
+            <tr><td>«100% пирамиды» = сценарий на своём <code>@Layer</code></td><td>100% строк JaCoCo; добивать все ярусы одним чатом</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="grid-2" style="display:grid;gap:8px">
+      <div class="do"><b>Do</b>Один блок сдачи в конце ответа. Origin = форк. Compose с <code>--build</code> после смены ветки. Дальше отдельные чаты: unit → integration → component → api → e2e → manual.</div>
+      <div class="dont"><b>Don't</b>Clone qa-guru. Писать note на main. Реализовывать фичу на develop. Писать тесты note в ДЗ-2. Commit / push / <code>reset --hard</code>. Prod без <code>remoteUrl</code>.</div>
+    </div>
+  </div>
+
+  <footer class="ft">
+    <span>Тексты промптов: <code>HOMEWORK.md</code></span>
+    <span>Stage ← push develop · prod ← push main (CI)</span>
+    <span>занятия 2 и 4</span>
+  </footer>
+</article>
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+  a.addEventListener("click", function (e) {
+    var id = a.getAttribute("href").slice(1);
+    var el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ block: "start" });
+    if (history.replaceState) history.replaceState(null, "", "#" + id);
+  });
+});
+</script>
+</body>
+</html>

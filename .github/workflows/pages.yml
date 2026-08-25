@@ -1,0 +1,60 @@
+name: pages
+
+# GitHub Pages backup + RF mirror on Box3 (lab.qa.guru).
+# github.io is often blocked from RU; SSOT URL is https://lab.qa.guru/
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: lab-pages
+  cancel-in-progress: true
+
+jobs:
+  check-lab-wrap:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v7
+      - run: python3 check-lab-wrap.py
+
+  pages:
+    needs: check-lab-wrap
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Stage Pages payload
+        run: |
+          mkdir pages
+          cp -R *.html css js README.md pages/
+          touch pages/.nojekyll
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: pages
+          enable_jekyll: false
+
+      - name: Mirror to lab.qa.guru
+        env:
+          SSH_KEY: ${{ secrets.LAB_QA_GURU_SSH_KEY }}
+        run: |
+          if [ -z "${SSH_KEY:-}" ]; then
+            echo "LAB_QA_GURU_SSH_KEY unset — skip Box3 mirror"
+            exit 0
+          fi
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' '212.92.101.15 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPLxPBgt4sucr/l9arC06dTjBT3VEN16P5GZ6BDe3l9I' >> ~/.ssh/known_hosts
+          rsync -avz --delete -e 'ssh -o BatchMode=yes -i '"$HOME"'/.ssh/id_ed25519' \
+            pages/ qaguru@212.92.101.15:/var/www/lab.qa.guru/
