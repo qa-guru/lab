@@ -19,7 +19,8 @@
 
 Канон на одном сценарии: *неверный пароль на логине*.
 
-- UI: `LoginTests#shouldShowErrorWhenPasswordIsWrong` + `pages/LoginPage` (`data-testid`)
+- Форма (живой `/api`): `LoginTests#shouldShowErrorWhenPasswordIsWrong` + `pages/LoginPage` (`data-testid`)
+- Chrome на стабе: `LoginFormTests` / `HeaderTests` — `@Layer("ui")`, не e2e
 - HTTP 401: `AuthApiTests#loginWithInvalidPassword`
 - Команда: `./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong`  
   Срез = `-DincludeTags` (rule 01). `@Tag("smoke")` — prod slice, не эта команда (ADR 005).

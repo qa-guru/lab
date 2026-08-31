@@ -104,7 +104,7 @@ Commit / URL / -Denv — rule
 
 ## Steps
 1. Один @Layer
-2. Стенды pipeline / stage / prod
+2. Стенды pipeline / mock(ui) / stage / prod
 3. Расширь PO, локаторы не в тесте
 4. @Tag яруса + positive/negative
 5. ./gradlew test -Denv=ci -DincludeTags=e2e \
@@ -142,7 +142,7 @@ alwaysApply: false
 globs: tests/java/.../**
 ---
 ./gradlew test -Denv=ci -DincludeTags=e2e \
-  -DexcludeTags=screenshot,mock
+  -DexcludeTags=screenshot
 # task testE2e нет
 # @Tag("smoke") — prod slice, не эта команда (ADR 005)
 
@@ -155,7 +155,7 @@ alwaysApply: true
 # 03-env-and-stand.mdc
 всегда -Denv=
 URL не в Java
-pipeline / stage / prod
+pipeline / mock(ui) / stage / prod
 
 # 04-one-task-one-layer.mdc
 один task = один ярус</pre>
@@ -167,7 +167,7 @@ pipeline / stage / prod
 paths: tests/java/.../**
 ---
 ./gradlew test -Denv=ci -DincludeTags=e2e \
-  -DexcludeTags=screenshot,mock
+  -DexcludeTags=screenshot
 # task testE2e нет
 # @Tag("smoke") — prod slice, не эта команда (ADR 005)
 
@@ -177,7 +177,7 @@ paths: tests/java/.../**
 # 03-env-and-stand.md
 всегда -Denv=
 URL не в Java
-pipeline / stage / prod
+pipeline / mock(ui) / stage / prod
 
 # 04-one-task-one-layer.md
 один task = один ярус</pre>
@@ -191,14 +191,14 @@ pipeline / stage / prod
 не commit / push / reset --hard без OK
 URL из properties, всегда -Denv=
 один task = один @Layer
-pipeline / stage / prod
+pipeline / mock(ui) / stage / prod
 
 # .clinerules/01-qa-java-gradle.md
 ---
 paths: tests/java/.../**
 ---
 ./gradlew test -Denv=ci -DincludeTags=e2e \
-  -DexcludeTags=screenshot,mock
+  -DexcludeTags=screenshot
 # task testE2e нет
 # @Tag("smoke") — prod slice, не эта команда (ADR 005)
 
@@ -206,7 +206,7 @@ paths: tests/java/.../**
 не commit / push / reset --hard без OK
 
 # 03-env-and-stand.md
-pipeline / stage / prod
+pipeline / mock(ui) / stage / prod
 
 # 04-one-task-one-layer.md
 один task = один ярус</pre>
@@ -219,7 +219,7 @@ pipeline / stage / prod
 ## E2e
 cd tests/java/tests-java-...-selenide
 ./gradlew test -Denv=ci -DincludeTags=e2e \
-  -DexcludeTags=screenshot,mock
+  -DexcludeTags=screenshot
 # task testE2e нет
 # @Tag("smoke") — prod slice, не эта команда (ADR 005)
 
@@ -227,7 +227,7 @@ cd tests/java/tests-java-...-selenide
 не commit / push / reset --hard без OK
 URL из properties, не localhost в коде
 один task = один @Layer
-pipeline / stage / prod</pre>
+pipeline / mock(ui) / stage / prod</pre>
           </div>
         </header>
         <div class="panel__body">
@@ -279,7 +279,7 @@ typeUsername / submitExpectingError
 @Step на методах PO, не на классе
 пароль не в тексте шага
 текст «Wrong login or password»
-стенды pipeline / stage / prod</pre>
+стенды pipeline / mock(ui) / stage / prod</pre>
         </div>
       </article>
 <article class="panel lab-src lab-src--adr" data-src="adr">

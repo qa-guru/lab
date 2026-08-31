@@ -52,7 +52,8 @@ class Login401Tests { … }           // второй файл
 
 Текст ошибки на форме
   LoginTests#shouldShowErrorWhenPasswordIsWrong
-  @Layer("e2e")  ← это UI-состояние, e2e ок
+  @Layer("e2e")  ← живой /api, не ярус ui
+  // ui = LoginFormTests / HeaderTests на mock
 
 Не $("pre") «401» — нет такого UI</pre>
         </div>

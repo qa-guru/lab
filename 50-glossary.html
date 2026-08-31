@@ -422,7 +422,24 @@ loginPage.openPage()
         </div>
         <div class="term__col term__col--ex">
           <h4>На LoginTests</h4>
-          <p>Контракт 401 → api-ярус, не второй e2e (ADR 009). Screenshot — slice, не <code>@Layer</code> (005, другой промпт). Без 009 агент закрывает JSON кликом по форме.</p>
+          <p>Контракт 401 → api-ярус, не второй e2e (ADR 009). Screenshot — slice, не <code>@Layer</code> (005). Chrome на стабе — <code>@Layer("ui")</code>, не e2e. Без 009 агент закрывает JSON кликом по форме.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="term" id="layer-ui">
+      <header class="term__bar">
+        <h3 class="term__name">@Layer("ui")</h3>
+        <p class="term__aka">chrome на стабе · не e2e</p>
+      </header>
+      <div class="term__grid">
+        <div class="term__col term__col--gen">
+          <h4>Общее</h4>
+          <p>Ярус пирамиды: браузер SPA на stub API (<code>-Denv=mock</code>). Не живой <code>/api</code>. <code>@Tag("mock")</code> / <code>screenshot</code> — slice внутри ui, не новый <code>@Layer</code>.</p>
+        </div>
+        <div class="term__col term__col--ex">
+          <h4>На LoginTests</h4>
+          <p>Форма без бэка — <code>LoginFormTests</code> / header — <code>HeaderTests</code>. Текст ошибки после живого login — всё ещё e2e. Путать «UI-состояние формы» с ярусом <code>ui</code> — типичная галлюцинация на занятии 4.</p>
         </div>
       </div>
     </article>
