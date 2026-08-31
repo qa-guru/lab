@@ -56,9 +56,9 @@ RAG: id чанков, которые держат «как», не «почем�
         <div class="panel__body">
           <p>Хочется «ярус скриншотов». Пиксельный diff — тот же браузерный сценарий, другой <strong>отбор</strong>.</p>
           <ul>
-            <li><code>*ScreenshotTests</code> остаются <code>@Layer("e2e")</code></li>
-            <li>Отбор: <code>@Tag("screenshot")</code> + job mock/stage</li>
-            <li><code>@Tag("smoke")</code> — тоже slice, не ярус</li>
+            <li>chrome PNG → <code>@Layer("ui")</code>; welcome после логина → <code>@Layer("e2e")</code></li>
+            <li>Отбор: <code>@Tag("screenshot")</code> + job <code>ui-tests</code> / <code>e2e-tests</code></li>
+            <li><code>@Tag("smoke")</code> — тоже slice, не ярус. Mock env — стенд яруса <code>ui</code>, не slice</li>
           </ul>
         </div>
       </section>

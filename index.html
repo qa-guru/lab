@@ -139,7 +139,7 @@ ADR   → screenshot — slice, не @Layer  (005)</pre>
       <section class="card card--muted">
         <h2 class="sec">Как агент это видит</h2>
         <p>В IDE <strong>rule включается сам</strong>. Skill читают фразой «прочитай SKILL.md». RAG — 2–4 пути, которые назвал skill. ADR — цитата «почему так».</p>
-        <p class="tiny muted" style="margin-top:6px">Наращивание: skill → + rule → + RAG (занятие 3) → + ADR (занятие 4). Листы 10–13 — тот же сюжет с выключенными слоями. Живой login: 30–35 (Context — сцена, не слой). <strong>main</strong> — логин / items, без note. <strong>develop</strong> — заметка влита, ярусы takeaway 6/6.</p>
+        <p class="tiny muted" style="margin-top:6px">Наращивание: skill → + rule → + RAG (занятие 3) → + ADR (занятие 4). Листы 10–13 — тот же сюжет с выключенными слоями. Живой login: 30–35 (Context — сцена, не слой). <strong>main</strong> — логин / items, без note. <strong>develop</strong> — заметка влита. Ярусы takeaway: unit → integration → component → api → <strong>ui</strong> → e2e → manual. Chrome на стабе — <code>ui</code>, не e2e.</p>
       </section>
     </div>
   </div>
@@ -286,7 +286,7 @@ ADR   → screenshot — slice, не @Layer  (005)</pre>
         <div class="panel__body">
           <pre>## E2e slice
 cd tests/java/tests-java-gradle-junit5-allure3-selenide
-./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock
+./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot
 
 ## Запреты
 - Не git commit без явной просьбы
@@ -391,8 +391,8 @@ RAG   → кнопка слева · 100 °C · 4 этаж
         <table class="kv">
           <thead><tr><th>Когда</th><th>id</th><th>Не это</th></tr></thead>
           <tbody>
-            <tr><td>Какой ярус / slice</td><td><code>test-pyramid</code> · <code>test-layers</code></td><td>JaCoCo 100% ≠ пирамида 100%</td></tr>
-            <tr><td>Пишешь e2e</td><td><code>po-fluent</code> · <code>po-locators</code> · <code>po-step</code></td><td>Селектор в классе <code>*Tests</code></td></tr>
+            <tr><td>Какой ярус / slice</td><td><code>test-pyramid</code> · <code>test-layers</code></td><td>JaCoCo 100% ≠ пирамида 100%; mock ≠ ярус</td></tr>
+            <tr><td>Пишешь ui / e2e</td><td><code>po-fluent</code> · <code>po-locators</code> · <code>po-step</code></td><td>Селектор в классе <code>*Tests</code>; chrome на стабе как e2e</td></tr>
             <tr><td>Стенд и URL</td><td><code>cfg-stands</code> · <code>cfg-env-profile</code> · <code>cfg-base-url</code></td><td>localhost в Java</td></tr>
             <tr><td>Контракт HTTP</td><td><code>crud-http</code></td><td>Таблица глаголов в <code>qa-write-test</code></td></tr>
             <tr><td>CI YAML / Gradle</td><td><code>ci-github-actions</code> · <code>ci-gradle-args</code></td><td>Имя skill <code>qa-*-github</code></td></tr>
@@ -463,9 +463,9 @@ RAG: id чанков, которые держат «как», не «почем�
         <div class="panel__body">
           <p>Хочется «ярус скриншотов». Пиксельный diff — тот же браузерный сценарий, другой <strong>отбор</strong>.</p>
           <ul>
-            <li><code>*ScreenshotTests</code> остаются <code>@Layer("e2e")</code></li>
-            <li>Отбор: <code>@Tag("screenshot")</code> + job mock/stage</li>
-            <li><code>@Tag("smoke")</code> — тоже slice, не ярус</li>
+            <li>chrome PNG → <code>@Layer("ui")</code>; welcome после логина → <code>@Layer("e2e")</code></li>
+            <li>Отбор: <code>@Tag("screenshot")</code> + job <code>ui-tests</code> / <code>e2e-tests</code></li>
+            <li><code>@Tag("smoke")</code> — тоже slice, не ярус. Mock env — стенд яруса <code>ui</code>, не slice</li>
           </ul>
         </div>
       </section>
@@ -695,7 +695,7 @@ git add -A && git commit -m "login"    // 02-git-safety
         <div class="panel__body">
           <pre>01  cd tests/java/tests-java-…-selenide
     ./gradlew test -Denv=ci -DincludeTags=e2e \
-      -DexcludeTags=screenshot,mock
+      -DexcludeTags=screenshot
     // нет task testE2e
     // -Dtest=Class#method — skill qa-write-test
 
@@ -842,7 +842,8 @@ class Login401Tests { … }           // второй файл
 
 Текст ошибки на форме
   LoginTests#shouldShowErrorWhenPasswordIsWrong
-  @Layer("e2e")  ← это UI-состояние, e2e ок
+  @Layer("e2e")  ← живой /api, не ярус ui
+  // ui = LoginFormTests / HeaderTests на mock
 
 Не $("pre") «401» — нет такого UI</pre>
         </div>
@@ -1029,7 +1030,7 @@ exit code 0 · нет commit</pre>
       </section>
       <section class="card card--adr">
         <div class="card__label"><span class="card__name">ADR</span><span class="card__q">почему</span></div>
-        <p>UI = e2e · 401 = api.</p>
+        <p>Форма (живой <code>/api</code>) = e2e · 401 = api. Chrome на стабе = <code>ui</code>.</p>
       </section>
     </div>
   </div>
@@ -1500,7 +1501,7 @@ SKILL (по запросу)
       <p class="prompt">Rules включены. Прочитай docs/agent-skills/qa-smoke-debug/SKILL.md.
 E2e slice. Не коммить.</p>
       <p class="tiny muted">Ожидание:</p>
-      <p class="prompt">./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock</p>
+      <p class="prompt">./gradlew test -Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot</p>
     </div>
   </div>
 
@@ -1694,7 +1695,7 @@ RAG ci-gradle-args · cfg-stands · allure-attach
               <tr><td>Ветка</td><td><code>main</code></td></tr>
               <tr><td>Health</td><td><code>curl -sf :8800/api/health</code> → 2xx</td></tr>
               <tr><td>UI</td><td><code>http://localhost:9821/</code> (не :9811)</td></tr>
-              <tr><td>Команда</td><td><code>-Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot,mock</code></td></tr>
+              <tr><td>Команда</td><td><code>-Denv=ci -DincludeTags=e2e -DexcludeTags=screenshot</code></td></tr>
               <tr><td>Прогон</td><td>exit 0, failed 0, <code>allure-results</code> не пустой</td></tr>
               <tr><td>Статус</td><td>сдано / не сдано</td></tr>
             </tbody>
@@ -1704,7 +1705,7 @@ RAG ci-gradle-args · cfg-stands · allure-attach
       <section class="panel panel--good">
         <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">ДЗ-2 · develop · note + план</p></div>
         <div class="panel__body">
-          <p class="tiny muted">После ДЗ-1, новый чат. Checkout <code>develop</code> → rebuild. Фичу и тесты note не писать (существующие не трогать). План = inventory; если 6/6 — дыр нет.</p>
+          <p class="tiny muted">После ДЗ-1, новый чат. Checkout <code>develop</code> → rebuild. Фичу и тесты note не писать (существующие не трогать). План = inventory с колонкой <strong>ui</strong>; chrome на стабе ≠ e2e.</p>
           <p class="prompt">Skills qa-coverage-audit · qa-pyramid-plan
 ADR 006 · RAG test-pyramid · crud-http · cfg-stands
 qa-make-full-pyramid — только после «следующий ярус».</p>
@@ -1714,10 +1715,10 @@ qa-make-full-pyramid — только после «следующий ярус»
               <tr><td>Ветка</td><td><code>develop</code>, не merge в main</td></tr>
               <tr><td>Фича жива</td><td>GET <code>/api/note</code> без токена → <strong>401</strong> (не 404)</td></tr>
               <tr><td>Код</td><td><code>NoteController</code> + <code>note-panel</code> — да</td></tr>
-              <tr><td>Покрытие</td><td>takeaway note: факт из дерева (upstream <strong>6/6</strong>)</td></tr>
+              <tr><td>Покрытие</td><td>takeaway note: факт из дерева (колонка <code>ui</code> обязательна)</td></tr>
               <tr><td>План</td><td>таблица сценарий × ярус; не копировать отчёт слепо</td></tr>
-              <tr><td>Дыры</td><td>нет, если 6/6; иначе ярус + якорь + стенды</td></tr>
-              <tr><td>Следующий</td><td>n/a если 6/6 · тесты в этом ДЗ не писались</td></tr>
+              <tr><td>Дыры</td><td>нет — если все колонки закрыты; иначе ярус + якорь + стенды</td></tr>
+              <tr><td>Следующий</td><td>n/a если дыр нет · тесты в этом ДЗ не писались</td></tr>
             </tbody>
           </table>
         </div>
@@ -1731,7 +1732,7 @@ qa-make-full-pyramid — только после «следующий ярус»
           <thead><tr><th>Так</th><th>Не так</th></tr></thead>
           <tbody>
             <tr><td>Синглтон <code>/api/note</code>: PUT 201/200, PATCH только api, один e2e happy-path</td><td>POST+409 «already exists»; e2e на все глаголы</td></tr>
-            <tr><td>Slice <code>smoke</code> / <code>screenshot</code> / <code>mock</code> — не колонка яруса (ADR 005)</td><td><code>@Layer("screenshot")</code>, <code>@Layer("smoke")</code></td></tr>
+            <tr><td>Slice <code>smoke</code> / <code>screenshot</code> / <code>mock</code> — не колонка яруса (ADR 005). Ярус <code>ui</code> — chrome на стабе</td><td><code>@Layer("screenshot")</code>; chrome на mock как e2e</td></tr>
             <tr><td>Delete на prod — фабрика+teardown (ADR 006), не сид <code>user1</code></td><td><code>if (prod)</code> в тесте; снести витрину</td></tr>
             <tr><td>«100% пирамиды» = сценарий на своём <code>@Layer</code></td><td>100% строк JaCoCo; добивать все ярусы одним чатом</td></tr>
           </tbody>
@@ -1740,7 +1741,7 @@ qa-make-full-pyramid — только после «следующий ярус»
     </section>
 
     <div class="grid-2" style="display:grid;gap:8px">
-      <div class="do"><b>Do</b>Один блок сдачи в конце ответа. Origin = форк. Compose с <code>--build</code> после смены ветки. Дальше отдельные чаты: unit → integration → component → api → e2e → manual.</div>
+      <div class="do"><b>Do</b>Один блок сдачи в конце ответа. Origin = форк. Compose с <code>--build</code> после смены ветки. Дальше отдельные чаты: unit → integration → component → api → <strong>ui</strong> → e2e → manual.</div>
       <div class="dont"><b>Don't</b>Clone qa-guru. Писать note на main. Реализовывать фичу на develop. Писать тесты note в ДЗ-2. Commit / push / <code>reset --hard</code>. Prod без <code>remoteUrl</code>.</div>
     </div>
   </div>
