@@ -100,7 +100,7 @@ ADR: docs/adr/009-login-401-is-api.md
 - CSS/xpath в *Tests
 - новый ChromeDriver в тесте
 Commit / URL / -Denv — rule
-401 vs форма — ADR 009
+JSON-контракт — tests/api (ADR 009)
 
 ## Steps
 1. Один @Layer
@@ -119,7 +119,7 @@ Commit / URL / -Denv — rule
           <pre class="lab-code">When  напиши e2e / покрой логин
 Don't CSS в *Tests, ChromeDriver
 RAG   po-locators · po-step · test-negative · cfg-stands
-ADR   009 — не решай 401 в чате
+ADR   009 — форма ≠ JSON, один слой
 Шаги  слой → стенды → PO → -Dtest=
 DoD   слой, стенды, @Step на PO, exit</pre>
         </div>
@@ -293,14 +293,14 @@ typeUsername / submitExpectingError
 Статус: принято
 
 Контекст: неверный пароль — форма и JSON.
-В чате хочется второй e2e «на 401».
+В чате хочется закрыть JSON кликом.
 
 Решение:
 - текст на форме →
   LoginTests#shouldShowErrorWhenPasswordIsWrong
 - 401 JSON → уже
   AuthApiTests#loginWithInvalidPassword
-- новый браузерный тест «на 401» не пишем
+- браузерный тест под HTTP-статус не пишем
 
 Последствия:
 - не $("pre") «401»

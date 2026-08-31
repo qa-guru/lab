@@ -17,7 +17,7 @@ sheets = [
     ("21-login-skill", "21 · без skill / со skill", "ChromeDriver vs qa-write-test"),
     ("22-login-rule", "22 · без rule / с rule", "full suite vs tags + -Denv"),
     ("23-login-rag", "23 · без RAG / с RAG", "$(\"input\") vs data-testid"),
-    ("24-login-adr", "24 · без ADR / с ADR", "e2e на 401 vs api"),
+    ("24-login-adr", "24 · без ADR / с ADR", "форма vs JSON 401"),
     ("30-login-micro", "30 · микропроект", "две вкладки · один промпт"),
     ("31-login-full", "31 · полный стек", "канон wrong password"),
     ("32-login-minus-one", "32 · полный − 1", "своя галлюцинация у слоя"),

@@ -25,7 +25,7 @@
 - Команда: `./gradlew test -Denv=ci -DincludeTags=e2e -Dtest=LoginTests#shouldShowErrorWhenPasswordIsWrong`  
   Срез = `-DincludeTags` (rule 01). `@Tag("smoke")` — prod slice, не эта команда (ADR 005).
 
-Без слоя агент типично: свой `ChromeDriver`, CSS в `*Tests`, `localhost`, full suite, commit, выдуманный `testE2e`, второй e2e «на 401». Со слоями — канон выше. Открытый код в IDE — это **сцена**, не пятый слой (иначе копипаст happy → sad).
+Без слоя агент типично: свой `ChromeDriver`, CSS в `*Tests`, `localhost`, full suite, commit, выдуманный `testE2e`, JSON-статус в браузере. Со слоями — канон выше. Открытый код в IDE — это **сцена**, не пятый слой (иначе копипаст happy → sad).
 
 Линейка занятий: skill → + rule (занятие 2) → + RAG (3) → + ADR (4).
 
@@ -47,7 +47,7 @@
 - [21 · skill](index.html#21-login-skill) — ChromeDriver vs `qa-write-test`
 - [22 · rule](index.html#22-login-rule) — full suite / commit vs tags + `-Denv`
 - [23 · RAG](index.html#23-login-rag) — `$("input")` vs `data-testid`
-- [24 · ADR](index.html#24-login-adr) — e2e на 401 vs api (ADR 009; screenshot-slice — ADR 005, другой промпт)
+- [24 · ADR](index.html#24-login-adr) — форма vs JSON 401 (ADR 009; screenshot-slice — ADR 005, другой промпт)
 
 ## Login · живой опыт (абляция)
 

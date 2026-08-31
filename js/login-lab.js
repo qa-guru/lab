@@ -160,7 +160,7 @@
             : "берёт $(\"input\"), Allure.step в тесте, «Invalid credentials»"
       });
     }
-    if (!adr) holes.push({ layer: "adr", text: "ещё полезет e2e на 401" });
+    if (!adr) holes.push({ layer: "adr", text: "ещё полезет статус в DOM" });
 
     var verdict;
     if (n === 4 && ctx) verdict = "Все слои включены. Тест как в репо.";
@@ -173,7 +173,7 @@
         : "Без RAG селекторы, текст ошибки и @Step не из репо.";
     } else if (!rule) verdict = "Без rule тест ок, но полный suite / testE2e и commit без OK.";
     else if (!skill) verdict = "Без skill метод может получиться, но в новом классе и без -Dtest=.";
-    else verdict = "Без ADR полезет e2e на 401.";
+    else verdict = "Без ADR полезет статус в DOM.";
 
     function pack(panels) {
       return { panels: panels, holds: holds, holes: holes, n: n, verdict: verdict };
@@ -670,15 +670,15 @@
       extras.push(panel("extra-test", "test · LoginSadPathTests.java", "bad", testLines, "test"));
     }
     if (!adr) {
-      extras.push(panel("extra-test-401", "test · Login401Tests.java", "bad", [
-        ln("bad", "// нет ADR 009 — второй e2e «на 401»"),
+      extras.push(panel("extra-test-status", "test · LoginStatusUiTests.java", "bad", [
+        ln("bad", "// нет ADR 009 — JSON ищут в UI"),
         ln("dim", "// уже есть AuthApiTests#loginWithInvalidPassword"),
         ln("dim", ""),
         ln("bad", "@Layer(\"e2e\")"),
-        ln("bad", "class Login401Tests {"),
+        ln("bad", "class LoginStatusUiTests {"),
         ln("dim", ""),
         ln("bad", "  @Test"),
-        ln("bad", "  void shouldSee401() {"),
+        ln("bad", "  void shouldSeeStatusInDom() {"),
         ln("bad", "    $(\"pre\").shouldHave(text(\"401\"));"),
         ln("dim", "  }"),
         ln("dim", "}")
@@ -841,10 +841,10 @@
     if (!s.adr) {
       gaps.push({
         layer: "adr",
-        title: "e2e на 401",
+        title: "JSON в браузере",
         ideal: "401 JSON уже в AuthApiTests#loginWithInvalidPassword. Этот e2e — текст на форме.",
-        expected: "Ещё Login401Tests: $(\"pre\").shouldHave(text(\"401\")).",
-        why: "Промпт про неверный пароль — 401 агент додумает сам."
+        expected: "Ещё LoginStatusUiTests: $(\"pre\").shouldHave(text(\"401\")).",
+        why: "Промпт про форму — HTTP-статус агент додумает сам."
       });
     }
     return { match: match, gaps: gaps, n: n };

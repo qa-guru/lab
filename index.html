@@ -23,7 +23,7 @@
   <a class="sheet-link" href="#21-login-skill"><b>21 · без skill / со skill</b><span>ChromeDriver vs qa-write-test</span></a>
   <a class="sheet-link" href="#22-login-rule"><b>22 · без rule / с rule</b><span>full suite vs tags + -Denv</span></a>
   <a class="sheet-link" href="#23-login-rag"><b>23 · без RAG / с RAG</b><span>$("input") vs data-testid</span></a>
-  <a class="sheet-link" href="#24-login-adr"><b>24 · без ADR / с ADR</b><span>e2e на 401 vs api</span></a>
+  <a class="sheet-link" href="#24-login-adr"><b>24 · без ADR / с ADR</b><span>форма vs JSON 401</span></a>
   <h2 class="sec">Login · живой опыт</h2>
   <a class="sheet-link" href="#30-login-micro"><b>30 · микропроект</b><span>две вкладки · один промпт</span></a>
   <a class="sheet-link" href="#31-login-full"><b>31 · полный стек</b><span>канон wrong password</span></a>
@@ -479,7 +479,7 @@ RAG: id чанков, которые держат «как», не «почем�
     </div>
 
     <div class="grid-2" style="display:grid;gap:8px">
-      <div class="do"><b>Do</b>Ярус vs slice (005) · Rest Assured vs e2e на 401 (009) · DS header не форк (008). URL из properties — rule, не ADR.</div>
+      <div class="do"><b>Do</b>Ярус vs slice (005) · Rest Assured vs клик по JSON (009) · DS header не форк (008). URL из properties — rule, не ADR.</div>
       <div class="dont"><b>Don't</b>Дублировать skill внутри ADR. Не писать ADR на каждый новый тест. Не менять таблицу <code>@Layer</code> без ADR.</div>
     </div>
   </div>
@@ -555,7 +555,7 @@ body { user1, wrongpassword }
             <tr><td>Skill</td><td>ChromeDriver, CSS в <code>*Tests</code>, нет DoD</td><td><code>qa-write-test</code>: слой → PO → <code>-Dtest=</code></td><td>21</td></tr>
             <tr><td>Rule</td><td>full suite, <code>testE2e</code>, commit, <code>localhost</code></td><td>tags e2e, всегда <code>-Denv</code>, не commit</td><td>22</td></tr>
             <tr><td>RAG</td><td>копирует happy path, <code>$("input")</code>, неверный текст</td><td><code>po-locators</code> · <code>po-step</code> · <code>test-negative</code> · <code>cfg-stands</code></td><td>23</td></tr>
-            <tr><td>ADR</td><td>второй e2e на JSON 401</td><td>контракт → api; форма → e2e</td><td>24</td></tr>
+            <tr><td>ADR</td><td>JSON-статус в браузере</td><td>контракт → api; форма → e2e</td><td>24</td></tr>
           </tbody>
         </table>
       </div>
@@ -824,11 +824,11 @@ cfg-stands    URL из config; user1 есть на
       <section class="panel panel--bad">
         <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">без ADR · «на всякий e2e»</p></div>
         <div class="panel__body">
-          <pre>// ещё один браузерный тест «на 401»
+          <pre>// ещё один браузерный тест под HTTP-статус
 open("/login"); fill; submit;
 $("pre").shouldHave(text("401"));   // нет такого UI
 
-class Login401Tests { … }           // второй файл
+class LoginStatusUiTests { … }      // второй файл
 // AuthApiTests#loginWithInvalidPassword
 // уже лежит в репо — не открыли ADR</pre>
         </div>
@@ -1105,8 +1105,8 @@ $(".alert").shouldHave(text("Invalid credentials"));
         <div class="panel__body">
           <pre class="pre--sm">UI-ошибка ок. Плюс:
   $("pre") «401»          // нет такого UI
-  class Login401Tests     // второй e2e
-  «на всякий e2e на JSON»</pre>
+  class LoginStatusUiTests // JSON в браузере
+  «на всякий клик по JSON»</pre>
         </div>
       </section>
     </div>
@@ -1156,13 +1156,13 @@ $(".alert").shouldHave(text("Invalid credentials"));
               <td>Skill+Rule</td>
               <td>RAG ADR</td>
               <td class="keep">слой → PO → не commit, tags+env</td>
-              <td class="hall">fillAndSubmitForm(wrong) · «Invalid» · e2e на 401</td>
+              <td class="hall">fillAndSubmitForm(wrong) · «Invalid» · статус в DOM</td>
             </tr>
             <tr>
               <td>Skill+RAG</td>
               <td>Rule ADR</td>
               <td class="keep">fluent error-path, data-testid, DoD</td>
-              <td class="hall">./gradlew test · testE2e · git commit · «ещё 401 кликом»</td>
+              <td class="hall">./gradlew test · testE2e · git commit · «JSON кликом»</td>
             </tr>
             <tr>
               <td>Skill+ADR</td>
@@ -1174,7 +1174,7 @@ $(".alert").shouldHave(text("Invalid credentials"));
               <td>Rule+RAG</td>
               <td>Skill ADR</td>
               <td class="keep">команда канона, селекторы, текст ошибки</td>
-              <td class="hall">новый класс вместо LoginTests · нет DoD · e2e на 401</td>
+              <td class="hall">новый класс вместо LoginTests · нет DoD · статус в DOM</td>
             </tr>
             <tr>
               <td>Rule+ADR</td>
@@ -1240,17 +1240,17 @@ $(".alert").shouldHave(text("Invalid credentials"));
             <tr>
               <td>Skill</td>
               <td class="keep">порядок: слой → PO → прогон → DoD</td>
-              <td class="hall">выдуманный селектор / текст · commit · e2e на 401</td>
+              <td class="hall">выдуманный селектор / текст · commit · статус в DOM</td>
             </tr>
             <tr>
               <td>Rule</td>
               <td class="keep">не suite, не commit, всегда -Denv</td>
-              <td class="hall">new ChromeDriver() · $("input") · «Invalid» · e2e на 401</td>
+              <td class="hall">new ChromeDriver() · $("input") · «Invalid» · статус в DOM</td>
             </tr>
             <tr>
               <td>RAG</td>
               <td class="keep">data-testid, submitExpectingError, точный текст</td>
-              <td class="hall">full suite · commit · нет DoD · второй тест на 401</td>
+              <td class="hall">full suite · commit · нет DoD · второй тест под HTTP-статус</td>
             </tr>
             <tr>
               <td>ADR</td>

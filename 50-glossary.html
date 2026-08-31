@@ -157,7 +157,7 @@ loginPage.openPage()
         </div>
         <div class="term__col term__col--ex">
           <h4>На LoginTests</h4>
-          <p>Листы 32–34: Gradle-task <code>testE2e</code> (его нет) — без rule; CSS в <code>*Tests</code> / копия happy path — без RAG; второй e2e «на JSON 401» — без ADR 009; commit без OK — без rule.</p>
+          <p>Листы 32–34: Gradle-task <code>testE2e</code> (его нет) — без rule; CSS в <code>*Tests</code> / копия happy path — без RAG; JSON-статус в браузере — без ADR 009; commit без OK — без rule.</p>
         </div>
       </div>
     </article>
@@ -281,7 +281,7 @@ loginPage.openPage()
         </div>
         <div class="term__col term__col--ex">
           <h4>На LoginTests</h4>
-          <p><code>qa-write-test</code> уже граф: выбрать <code>@Layer</code> → RAG → расширить PO → метод → Gradle → красный? triage. Ветка ADR: UI-текст → e2e; JSON 401 → <code>AuthApiTests</code>, не второй e2e.</p>
+          <p><code>qa-write-test</code> уже граф: выбрать <code>@Layer</code> → RAG → расширить PO → метод → Gradle → красный? triage. Ветка ADR: UI-текст → e2e; JSON 401 → <code>AuthApiTests</code>, не клик по статусу.</p>
         </div>
       </div>
     </article>
@@ -422,7 +422,7 @@ loginPage.openPage()
         </div>
         <div class="term__col term__col--ex">
           <h4>На LoginTests</h4>
-          <p>Контракт 401 → api-ярус, не второй e2e (ADR 009). Screenshot — slice, не <code>@Layer</code> (005). Chrome на стабе — <code>@Layer("ui")</code>, не e2e. Без 009 агент закрывает JSON кликом по форме.</p>
+          <p>Контракт 401 → api-ярус, не клик по статусу (ADR 009). Screenshot — slice, не <code>@Layer</code> (005). Chrome на стабе — <code>@Layer("ui")</code>, не e2e. Без 009 агент закрывает JSON кликом по форме.</p>
         </div>
       </div>
     </article>
