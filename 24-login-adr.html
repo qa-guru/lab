@@ -34,11 +34,11 @@
       <section class="panel panel--bad">
         <div class="panel__bar"><span class="dots"><i class="dot dot--r"></i><i class="dot dot--y"></i><i class="dot dot--g"></i></span><p class="panel__title">без ADR · «на всякий e2e»</p></div>
         <div class="panel__body">
-          <pre>// ещё один браузерный тест «на 401»
+          <pre>// ещё один браузерный тест под HTTP-статус
 open("/login"); fill; submit;
 $("pre").shouldHave(text("401"));   // нет такого UI
 
-class Login401Tests { … }           // второй файл
+class LoginStatusUiTests { … }      // второй файл
 // AuthApiTests#loginWithInvalidPassword
 // уже лежит в репо — не открыли ADR</pre>
         </div>
