@@ -138,7 +138,7 @@
     if (skill) holds.push({ layer: "skill", text: "дописывает LoginTests, гоняет один метод" });
     if (rule) holds.push({ layer: "rule", text: "не гоняет весь suite и сам не коммитит" });
     if (rag) holds.push({ layer: "rag", text: "data-testid, текст ошибки, @Step на методах PO" });
-    if (adr) holds.push({ layer: "adr", text: "401 не трогает — уже AuthApiTests" });
+    if (adr) holds.push({ layer: "adr", text: "JSON уже в AuthApiTests" });
 
     if (!ctx) {
       holes.push({

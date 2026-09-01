@@ -816,7 +816,7 @@ cfg-stands    URL из config; user1 есть на
     </div>
   </header>
 
-  <h1 class="h1">ADR 009: 401 — не новый e2e</h1>
+  <h1 class="h1">ADR 009: JSON 401 — не новый e2e</h1>
   <p class="lead">Skill+RAG умеют <em>как</em> кликнуть. ADR фиксирует <strong>почему A, не B</strong>, иначе каждый чат снова закрывает JSON браузером.</p>
 
   <div class="body">
@@ -977,7 +977,7 @@ test { includeTags из -DincludeTags; -Denv= }
   </header>
 
   <h1 class="h1">Правильный ответ: слои не дают скопировать happy path</h1>
-  <p class="lead">Те же две вкладки, тот же промпт. <strong>Context даёт образец</strong>. Skill / rule / RAG / ADR не дают взять <code>fillAndSubmitForm</code> на sad path, выдумать task и закрыть 401 кликом.</p>
+  <p class="lead">Те же две вкладки, тот же промпт. <strong>Context даёт образец</strong>. Skill / rule / RAG / ADR не дают взять <code>fillAndSubmitForm</code> на sad path, выдумать task и закрыть JSON кликом.</p>
 
   <div class="body">
     <div class="grid-2" style="display:grid;gap:8px">
@@ -1179,7 +1179,7 @@ $(".alert").shouldHave(text("Invalid credentials"));
             <tr>
               <td>Rule+ADR</td>
               <td>Skill RAG</td>
-              <td class="keep">не commit · 401 не кликом</td>
+              <td class="keep">не commit · JSON не кликом</td>
               <td class="hall">ChromeDriver · fillAndSubmitForm · «Invalid credentials»</td>
             </tr>
             <tr>
@@ -1319,7 +1319,7 @@ git commit -am "add login test"</pre>
           <li>Поиск по репо / @codebase</li>
           <li>Сигнатуры Gradle, если агент дошёл</li>
         </ul>
-        <p class="tiny muted">Примеры «как уже сделано». Нет When, нет запрета, нет точного текста ошибки, нет развилки 401.</p>
+        <p class="tiny muted">Примеры «как уже сделано». Нет When, нет запрета, нет точного текста ошибки, нет развилки форма vs JSON.</p>
       </section>
       <section class="card card--muted">
         <div class="card__label"><span class="card__name">Чего Context не делает</span><span class="card__q">не слой</span></div>
@@ -1327,7 +1327,7 @@ git commit -am "add login test"</pre>
           <li>Не skill — не заставляет выбрать один <code>@Layer</code> и DoD</li>
           <li>Не rule — не держит «не commit» на следующем ходе</li>
           <li>Не RAG — happy path на вкладке ≠ error path</li>
-          <li>Не ADR — не помнит, почему 401 не кликают</li>
+          <li>Не ADR — не помнит, почему JSON не кликают</li>
         </ul>
       </section>
     </div>
@@ -1570,7 +1570,7 @@ RAG   po-locators · po-step · test-negative · cfg-stands</pre>
       <p class="prompt">Rules ON. Прочитай docs/agent-skills/qa-review-ci/SKILL.md
 и чанки ci-github-actions, test-pyramid, ci-gradle-args.
 Код не меняй. Не коммить.</p>
-      <div class="dont"><b>Ещё нет ADR</b>Агент знает <em>как</em> закрыть 401, но может снова предложить e2e «на всякий». «Почему api, не браузер» — следующий лист.</div>
+      <div class="dont"><b>Ещё нет ADR</b>Агент знает <em>как</em> закрыть JSON, но может снова предложить клик «на всякий». «Почему api, не браузер» — следующий лист.</div>
     </div>
   </div>
 
@@ -1646,7 +1646,7 @@ ADR   009: 401 JSON — api, не новый e2e-клик</pre>
       <p class="prompt">Rules ON. Прочитай docs/agent-skills/qa-coverage-audit/SKILL.md
 и rag/test-pyramid.md. Таблица сценариев × ярусы + 3 дыры.
 Код не меняй. Не коммить.</p>
-      <p class="tiny muted">Ожидание: таблица, не 15 новых e2e. Дальше — отдельный task <code>qa-pyramid-plan</code>. Закрыть 401 новым e2e = нарушение ADR 009.</p>
+      <p class="tiny muted">Ожидание: таблица, не 15 новых e2e. Дальше — отдельный task <code>qa-pyramid-plan</code>. Закрыть JSON-статус кликом = нарушение ADR 009.</p>
     </div>
   </div>
 
